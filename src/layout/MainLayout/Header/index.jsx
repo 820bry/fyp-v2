@@ -25,7 +25,7 @@ const Header = ({ handleLeftDrawerToggle }) => {
       {/* logo & toggler button */}
       <Box
         sx={{
-          width: 228,
+          width: 280,
           display: 'flex',
           [theme.breakpoints.down('md')]: {
             width: 'auto'
@@ -40,7 +40,7 @@ const Header = ({ handleLeftDrawerToggle }) => {
             variant="rounded"
             sx={{
               ...theme.typography.commonAvatar,
-              ...theme.typography.mediumAvatar,
+              ...theme.typography.largeAvatar,
               transition: 'all .2s ease-in-out',
               background: theme.palette.secondary.light,
               color: theme.palette.secondary.dark,
@@ -52,18 +52,18 @@ const Header = ({ handleLeftDrawerToggle }) => {
             onClick={handleLeftDrawerToggle}
             color="inherit"
           >
-            <IconMenu2 stroke={1.5} size="1.3rem" />
+            <IconMenu2 stroke={1.5} size="1.5rem" />
           </Avatar>
         </ButtonBase>
       </Box>
 
       {/* header search */}
-      <SearchSection />
+      {/* <SearchSection /> */}
       <Box sx={{ flexGrow: 1 }} />
       <Box sx={{ flexGrow: 1 }} />
 
       {/* notification & profile */}
-      <NotificationSection />
+      {/* <NotificationSection /> */}
       <ProfileSection />
     </>
   );
