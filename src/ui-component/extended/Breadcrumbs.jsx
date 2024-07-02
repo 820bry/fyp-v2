@@ -12,7 +12,7 @@ import Typography from '@mui/material/Typography';
 import MuiBreadcrumbs from '@mui/material/Breadcrumbs';
 
 // project import
-import navigation from '../../menu-items';
+import xddnavigation from '../../menu-items';
 
 // assets
 import { IconChevronRight, IconTallymark1 } from '@tabler/icons-react';
@@ -78,7 +78,7 @@ const Breadcrumbs = ({
   let customLocation = location.pathname;
 
   useEffect(() => {
-    navigation?.items?.map((menu) => {
+    xddnavigation?.items?.map((menu) => {
       if (menu.type && menu.type === 'group') {
         if (menu?.url && menu.url === customLocation) {
           setMain(menu);
@@ -266,7 +266,7 @@ Breadcrumbs.propTypes = {
   icon: PropTypes.bool,
   icons: PropTypes.bool,
   maxItems: PropTypes.number,
-  navigation: PropTypes.object,
+  xddnavigation: PropTypes.object,
   rightAlign: PropTypes.bool,
   separator: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   title: PropTypes.bool,
