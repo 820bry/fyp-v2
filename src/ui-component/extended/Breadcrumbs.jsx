@@ -78,7 +78,7 @@ const Breadcrumbs = ({
   let customLocation = location.pathname;
 
   useEffect(() => {
-    navigation?.items?.map((menu) => {
+    navigation.items.map((menu) => {
       if (menu.type && menu.type === 'group') {
         if (menu?.url && menu.url === customLocation) {
           setMain(menu);

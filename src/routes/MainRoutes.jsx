@@ -7,12 +7,13 @@ import Loadable from '../ui-component/Loadable';
 // dashboard routing
 const DashboardDefault = Loadable(lazy(() => import('../views/dashboard')));
 
+// logging routing
+const MoodLogging = Loadable(lazy(() => import('../views/mood-logging')));
+
 // utilities routing
 const UtilsTypography = Loadable(lazy(() => import('../views/utilities/Typography')));
 const UtilsColor = Loadable(lazy(() => import('../views/utilities/Color')));
 const UtilsShadow = Loadable(lazy(() => import('../views/utilities/Shadow')));
-// const UtilsMaterialIcons = Loadable(lazy(() => import('views/utilities/MaterialIcons')));
-// const UtilsTablerIcons = Loadable(lazy(() => import('views/utilities/TablerIcons')));
 
 // sample page routing
 const SamplePage = Loadable(lazy(() => import('../views/sample-page')));
@@ -21,18 +22,22 @@ const SamplePage = Loadable(lazy(() => import('../views/sample-page')));
 
 const MainRoutes = {
   path: '/',
-  element: <MainLayout />,
+  element: <MainLayout />,  
   children: [
     {
       path: '/',
+      element: <DashboardDefault />   // maybe change to an auth page first, then redirect to login or home page
+    },
+    {
+      path: 'home',
       element: <DashboardDefault />
     },
     {
-      path: 'dashboard',
+      path: 'logging',
       children: [
         {
-          path: 'default',
-          element: <DashboardDefault />
+          path: 'mood',
+          element: <MoodLogging />
         }
       ]
     },
@@ -63,24 +68,6 @@ const MainRoutes = {
         }
       ]
     },
-    // {
-    //   path: 'icons',
-    //   children: [
-    //     {
-    //       path: 'tabler-icons',
-    //       element: <UtilsTablerIcons />
-    //     }
-    //   ]
-    // },
-    // {
-    //   path: 'icons',
-    //   children: [
-    //     {
-    //       path: 'material-icons',
-    //       element: <UtilsMaterialIcons />
-    //     }
-    //   ]
-    // },
     {
       path: 'sample-page',
       element: <SamplePage />
