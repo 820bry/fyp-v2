@@ -14,6 +14,7 @@ import Sidebar from './Sidebar';
 import Breadcrumbs from '../../ui-component/extended/Breadcrumbs';
 import { SET_MENU } from '../../store/actions';
 import { drawerWidth } from '../../store/constant';
+import navigation from '../../menu-items';
 
 // assets
 import { IconChevronRight } from '@tabler/icons-react';
@@ -88,7 +89,7 @@ const MainLayout = () => {
       {/* main content */}
       <Main theme={theme} open={leftDrawerOpened}>
         {/* breadcrumb */}
-        {/* <Breadcrumbs separator={IconChevronRight} navigation={navigation} icon title rightAlign /> */}
+        <Breadcrumbs separator={IconChevronRight} navigation={navigation} icon title rightAlign />
         <Outlet />
       </Main>
     </Box>
