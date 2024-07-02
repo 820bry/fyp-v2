@@ -1,5 +1,7 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { onAuthStateChanged } from 'firebase/auth';
+import SessionProvider from '../../routes/SessionProvider';
 
 // material-ui
 import AppBar from '@mui/material/AppBar';
@@ -15,6 +17,7 @@ import Breadcrumbs from '../../ui-component/extended/Breadcrumbs';
 import { SET_MENU } from '../../store/actions';
 import { drawerWidth } from '../../store/constant';
 import navigation from '../../menu-items';
+import { auth } from '../../firebase';
 
 // assets
 import { IconChevronRight } from '@tabler/icons-react';
@@ -56,6 +59,8 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' && pr
 
 const MainLayout = () => {
   const theme = useTheme();
+  const navigate = useNavigate();
+
   const matchDownMd = useMediaQuery(theme.breakpoints.down('md'));
   // Handle left drawer
   const leftDrawerOpened = useSelector((state) => state.customization.opened);
@@ -65,34 +70,36 @@ const MainLayout = () => {
   };
 
   return (
-    <Box sx={{ display: 'flex' }}>
-      <CssBaseline />
-      {/* header */}
-      <AppBar
-        enableColorOnDark
-        position="fixed"
-        color="inherit"
-        elevation={0}
-        sx={{
-          bgcolor: theme.palette.background.default,
-          transition: leftDrawerOpened ? theme.transitions.create('width') : 'none'
-        }}
-      >
-        <Toolbar>
-          <Header handleLeftDrawerToggle={handleLeftDrawerToggle} />
-        </Toolbar>
-      </AppBar>
+    <SessionProvider>
+      <Box sx={{ display: 'flex' }}>
+        <CssBaseline />
+        {/* header */}
+        <AppBar
+          enableColorOnDark
+          position="fixed"
+          color="inherit"
+          elevation={0}
+          sx={{
+            bgcolor: theme.palette.background.default,
+            transition: leftDrawerOpened ? theme.transitions.create('width') : 'none'
+          }}
+        >
+          <Toolbar>
+            <Header handleLeftDrawerToggle={handleLeftDrawerToggle} />
+          </Toolbar>
+        </AppBar>
 
-      {/* drawer */}
-      <Sidebar drawerOpen={!matchDownMd ? leftDrawerOpened : !leftDrawerOpened} drawerToggle={handleLeftDrawerToggle} />
+        {/* drawer */}
+        <Sidebar drawerOpen={!matchDownMd ? leftDrawerOpened : !leftDrawerOpened} drawerToggle={handleLeftDrawerToggle} />
 
-      {/* main content */}
-      <Main theme={theme} open={leftDrawerOpened}>
-        {/* breadcrumb */}
-        <Breadcrumbs separator={IconChevronRight} navigation={navigation} icon title rightAlign />
-        <Outlet />
-      </Main>
-    </Box>
+        {/* main content */}
+        <Main theme={theme} open={leftDrawerOpened}>
+          {/* breadcrumb */}
+          <Breadcrumbs separator={IconChevronRight} navigation={navigation} icon title rightAlign />
+          <Outlet />
+        </Main>
+      </Box>
+    </SessionProvider>
   );
 };
 

@@ -30,8 +30,8 @@ const Dashboard = () => {
 
   return (
     <MainCard>
-      <MuiTypography variant="h1" gutterBottom>
-        Good Morning/Afternoon/Evening
+      <MuiTypography variant="h2" gutterBottom>
+        Good Morning
       </MuiTypography>
     </MainCard>
 

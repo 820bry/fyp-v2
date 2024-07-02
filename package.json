@@ -25,6 +25,8 @@
     "@tabler/icons-react": "^3.6.0",
     "apexcharts": "^3.49.2",
     "env-cmd": "^10.1.0",
+    "firebase": "^10.12.2",
+    "firestore": "^1.1.6",
     "formik": "^2.4.6",
     "framer-motion": "^11.2.12",
     "material-ui-popup-state": "^5.1.2",

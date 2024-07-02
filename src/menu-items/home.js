@@ -8,7 +8,6 @@ const icons = { IconLayoutDashboard };
 
 const home = {
   id: 'home',
-  title: 'Home',
   type: 'group',
   children: [
     {

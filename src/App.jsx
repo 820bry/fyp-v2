@@ -23,7 +23,7 @@ const App = () => {
       <ThemeProvider theme={themes(customization)}>
         <CssBaseline />
         <NavigationScroll>
-          <RouterProvider router={router} />
+          <RouterProvider router={router} /> 
         </NavigationScroll>
       </ThemeProvider>
     </StyledEngineProvider>

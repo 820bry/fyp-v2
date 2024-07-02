@@ -26,7 +26,7 @@ const MainRoutes = {
   children: [
     {
       path: '/',
-      element: <DashboardDefault />   // maybe change to an auth page first, then redirect to login or home page
+      element: <DashboardDefault />
     },
     {
       path: 'home',
