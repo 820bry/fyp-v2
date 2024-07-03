@@ -12,11 +12,9 @@ export default function SessionProvider({ children }){
     const needAuthRoutes = ["/", "/home", "/logging"];
 
     useEffect(() => {
-        console.log("current path: ", pathname)
-
         onAuthStateChanged(auth, (user) => {
             if (needAuthRoutes.includes(pathname) && !user) {
-                navigate("/pages/login/login3")
+                navigate("/login")
             }
         });
     }, [])

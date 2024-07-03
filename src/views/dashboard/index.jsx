@@ -5,7 +5,6 @@ import Grid from '@mui/material/Grid';
 import MuiTypography from '@mui/material/Typography';
 
 // project imports
-import EarningCard from './EarningCard';
 import PopularCard from './PopularCard';
 import TotalOrderLineChartCard from './TotalOrderLineChartCard';
 import TotalIncomeDarkCard from './TotalIncomeDarkCard';

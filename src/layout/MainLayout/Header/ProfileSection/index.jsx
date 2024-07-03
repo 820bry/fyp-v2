@@ -3,7 +3,8 @@ import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-import { signOut } from 'firebase/auth';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
+import { doc, getDoc } from "firebase/firestore";
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
@@ -15,12 +16,10 @@ import Chip from '@mui/material/Chip';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid';
-import InputAdornment from '@mui/material/InputAdornment';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import OutlinedInput from '@mui/material/OutlinedInput';
 import Paper from '@mui/material/Paper';
 import Popper from '@mui/material/Popper';
 import Stack from '@mui/material/Stack';
@@ -34,7 +33,7 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import MainCard from '../../../../ui-component/cards/MainCard';
 import Transitions from '../../../../ui-component/extended/Transitions';
 import User1 from '../../../../assets/images/users/user-round.svg';
-import { auth } from '../../../../firebase';
+import { auth, firestore } from '../../../../firebase';
 
 // assets
 import { IconLogout, IconSearch, IconSettings, IconUser } from '@tabler/icons-react';
@@ -51,6 +50,26 @@ const ProfileSection = () => {
   const [notification, setNotification] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const [open, setOpen] = useState(false);
+
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+
+  useEffect(() => {
+    onAuthStateChanged(auth, async (user) => {
+      try {
+        const docRef = doc(firestore, "users", user.uid);
+        const docSnap = await getDoc(docRef);
+  
+        if (docSnap.exists()) {
+          setFirstName(docSnap.data().firstName);
+          setLastName(docSnap.data().lastName);
+        }
+      } catch(e) {
+        console.error("error retrieving user info: " + e);
+      }
+    });
+  }), [];
+
   /**
    * anchorRef is used on different componets and specifying one type leads to other components throwing an error
    * */
@@ -59,7 +78,7 @@ const ProfileSection = () => {
     signOut(auth).then(() => {
       // Sign-out successful.
     }).catch((error) => {
-      console.log(error.code + " : " + error.message);
+      console.error(error.code + " : " + error.message);
     });
   };
 
@@ -163,7 +182,7 @@ const ProfileSection = () => {
                       <Stack direction="row" spacing={0.5} alignItems="center">
                         <Typography variant="h4">Logged in as</Typography>
                         <Typography component="span" variant="h4" sx={{ fontWeight: 400 }}>
-                          Johne Doe
+                          {firstName} {lastName}
                         </Typography>
                       </Stack>
                     </Stack>

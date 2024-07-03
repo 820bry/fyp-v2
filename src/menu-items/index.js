@@ -11,7 +11,8 @@ import other from './other';
 // ==============================|| MENU ITEMS ||============================== //
 
 const menuItems = {
-  items: [home, logging, exercises, resource, pages, utilities, other]
+  items: [home, logging, exercises, resource]
+  // items: [home, logging, exercises, resource, pages, utilities, other]
 };
 
 export default menuItems;

@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { collection, doc, setDoc } from 'firebase/firestore';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
@@ -25,9 +28,9 @@ import * as Yup from 'yup';
 import { Formik } from 'formik';
 
 // project imports
-import Google from '../../../../assets/images/icons/social-google.svg';
 import AnimateButton from '../../../../ui-component/extended/AnimateButton';
 import { strengthColor, strengthIndicator } from '../../../../utils/password-strength';
+import { auth, firestore } from '../../../../firebase';
 
 // assets
 import Visibility from '@mui/icons-material/Visibility';
@@ -37,6 +40,8 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 const AuthRegister = ({ ...others }) => {
   const theme = useTheme();
+  const navigate = useNavigate();
+
   const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
   const customization = useSelector((state) => state.customization);
   const [showPassword, setShowPassword] = useState(false);
@@ -45,10 +50,6 @@ const AuthRegister = ({ ...others }) => {
   const [strength, setStrength] = useState(0);
   const [level, setLevel] = useState();
 
-  const googleHandler = async () => {
-    console.error('Register');
-  };
-
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -56,6 +57,32 @@ const AuthRegister = ({ ...others }) => {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+
+    createUserWithEmailAndPassword(auth, data.get('email'), data.get('password'))
+      .then((userCredential) => {
+        const uid = userCredential.user.uid;
+
+        try {
+          const usersRef = collection(firestore, "users");
+          setDoc(doc(usersRef, uid), {
+            firstName: data.get('fname'),
+            lastName: data.get('lname'),
+          });
+
+        } catch(e) {
+          console.error("Error while writing user to firestore: ", e);
+        }
+
+        navigate("/home");
+      })
+      .catch((error) => {
+        console.error("Register error: " + error.code + " : " + error.message);
+      });
+  }
 
   const changePassword = (value) => {
     const temp = strengthIndicator(value);
@@ -90,7 +117,7 @@ const AuthRegister = ({ ...others }) => {
           password: Yup.string().max(255).required('Password is required')
         })}
       >
-        {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
+        {({ errors, handleBlur, handleChange, isSubmitting, touched, values }) => (
           <form noValidate onSubmit={handleSubmit} {...others}>
             <Grid container spacing={matchDownSM ? 0 : 2}>
               <Grid item xs={12} sm={6}>

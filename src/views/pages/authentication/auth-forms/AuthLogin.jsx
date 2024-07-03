@@ -50,6 +50,8 @@ const AuthLogin = ({ ...others }) => {
     event.preventDefault();
   };
 
+
+  // Login Process
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -61,11 +63,11 @@ const AuthLogin = ({ ...others }) => {
             navigate('/home');
           })
           .catch((error) => {
-            console.log(error.code + " : " + error.message);
+            console.log("Login error: " + error.code + " : " + error.message);
           });
       })
       .catch((error) => {
-        console.log(error.code + " : " + error.message);
+        console.error("Set persistence error: " + error.code + " : " + error.message);
       });
   }
 
