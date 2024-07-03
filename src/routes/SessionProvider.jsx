@@ -12,9 +12,9 @@ export default function SessionProvider({ children }){
     const needAuthRoutes = ["/", "/home", "/logging"];
 
     useEffect(() => {
-        onAuthStateChanged(auth, (user) => {
+        onAuthStateChanged(auth, async (user) => {
             if (needAuthRoutes.includes(pathname) && !user) {
-                navigate("/login")
+                await navigate("/login")
             }
         });
     }, [])

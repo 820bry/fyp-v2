@@ -1,6 +1,6 @@
 # fyp-v2
  
-# TODO
+## TODO
 Misc 
 - Maybe add color palettes for individual emotions?
 
@@ -13,3 +13,6 @@ Mood Logging
 Mental Assessment
 - Mental Assessment Main Page
 - TBD
+
+## Issues
+- After some time it fails to get user and uid (dk what the conditions are)

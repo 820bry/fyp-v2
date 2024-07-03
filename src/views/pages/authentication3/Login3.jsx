@@ -11,6 +11,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import AuthWrapper1 from '../AuthWrapper1';
 import AuthCardWrapper from '../AuthCardWrapper';
 import AuthLogin from '../authentication/auth-forms/AuthLogin'; 
+import Chip from '../../../ui-component/extended/Chip';
 
 import Logo from '../../../assets/title.png';
 
@@ -57,6 +58,7 @@ const Login = () => {
                       <Typography component={Link} to="/register" variant="subtitle1" sx={{ textDecoration: 'none' }}>
                         Don&apos;t have an account?
                       </Typography>
+                      <Chip label={import.meta.env.VITE_APP_VERSION} disabled chipcolor="secondary" size="small" sx={{ cursor: 'pointer', mt: 3 }} />
                     </Grid>
                   </Grid>
                 </Grid>
