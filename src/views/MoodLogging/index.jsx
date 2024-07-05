@@ -6,16 +6,13 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 
-
-import SkeletonEarningCard from '../../ui-component/cards/Skeleton/LoadingCard';
-
 // project imports
-import MainCard from '../../ui-component/cards/MainCard';
-import SubCard from '../../ui-component/cards/SubCard';
 import AddMoodCard from './AddMoodCard';
 import MoodCard from './MoodCard';
 
 import { gridSpacing } from '../../store/constant';
+
+
 
 const MoodLogging = () => {
 
@@ -36,16 +33,8 @@ const MoodLogging = () => {
         >
             <Grid container spacing={gridSpacing}>
                 <Grid item xs={12}>
-                    <Box
-                        sx={{
-                            display: 'flex'
-                        }}
-                    >
-                        <Box 
-                            sx={{ 
-                                color: 'inherit'
-                            }}
-                        >
+                    <Box sx={{ display: 'flex' }} >
+                        <Box sx={{ color: 'inherit' }}>
                             <Typography variant="h1">Mood Logging</Typography>
                             <Typography 
                                 variant="body1"

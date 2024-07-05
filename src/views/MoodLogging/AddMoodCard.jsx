@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
@@ -17,11 +18,13 @@ import AddIcon from '@mui/icons-material/Add';
 
 const AddMoodCard = ({ isLoading }) => {
   const theme = useTheme();
+  const navigate = useNavigate();
+
   const today = getCurrentDate();
 
   // Go to add mood entry screen
   const handleAdd = () => {
-    console.log("hello");
+    navigate('/logging/add');
   };
 
   return (
@@ -83,14 +86,14 @@ const AddMoodCard = ({ isLoading }) => {
               <Grid item>
                 <Grid container alignItems="center">
                   <Grid item>
-                    <Typography sx={{ fontSize: '2.125rem', fontWeight: 500, mr: 1, mt: 1.75, mb: 0.75 }}>Add Entry</Typography>
+                    <Typography sx={{ fontSize: '1.5rem', fontWeight: 500, mr: 1, mt: 1.75, mb: 0.75 }}>Add Entry</Typography>
                   </Grid>
                 </Grid>
               </Grid>
               <Grid item sx={{ mb: 1.25 }}>
                 <Typography
                   sx={{
-                    fontSize: '1rem',
+                    fontSize: '0.8rem',
                     fontWeight: 500,
                     color: 'secondary.200'
                   }}

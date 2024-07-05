@@ -89,7 +89,7 @@ const MoodCard = ({ isLoading }) => {
                         <Grid item>
                             <Grid container alignItems="center">
                                 <Grid item>
-                                    <Typography sx={{ fontSize: '2.125rem', fontWeight: 500, mr: 1, mt: 1.75, mb: 0.75 }}>
+                                    <Typography sx={{ fontSize: '1.5rem', fontWeight: 500, mr: 1, mt: 1.75, mb: 0.75 }}>
                                         02/07/2024
                                     </Typography>
                                 </Grid>
@@ -98,7 +98,7 @@ const MoodCard = ({ isLoading }) => {
                         <Grid item sx={{ mb: 1.25 }}>
                             <Typography
                             sx={{
-                                fontSize: '1rem',
+                                fontSize: '0.8rem',
                                 fontWeight: 500,
                                 color: 'primary.200'
                             }}

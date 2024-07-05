@@ -3,6 +3,8 @@
 ## TODO
 Misc 
 - Maybe add color palettes for individual emotions?
+- ~~Make login/register form slightly bigger to fix zooming issue on mobile~~ fixed by disabling zoom on mobile
+- Maybe rewrite session checking on the backend
 
 Mood Logging
 - Mood Logging Main Page

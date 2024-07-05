@@ -13,7 +13,7 @@ const logging = {
             id: 'daily',
             title: 'Mood Logging',
             type: 'item',
-            url: '/logging/mood',
+            url: '/logging/',
             icon: icons.IconBrain,
             breadcrumbs: false
         },

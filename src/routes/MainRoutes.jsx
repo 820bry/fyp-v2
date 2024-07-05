@@ -8,7 +8,8 @@ import Loadable from '../ui-component/Loadable';
 const DashboardDefault = Loadable(lazy(() => import('../views/dashboard')));
 
 // logging routing
-const MoodLogging = Loadable(lazy(() => import('../views/mood-logging')));
+const MoodLogging = Loadable(lazy(() => import('../views/MoodLogging')));
+const AddEntry = Loadable(lazy(() => import("../views/MoodLogging/AddEntry")));
 
 // utilities routing
 const UtilsTypography = Loadable(lazy(() => import('../views/utilities/Typography')));
@@ -34,10 +35,14 @@ const MainRoutes = {
     },
     {
       path: 'logging',
+      element: <MoodLogging />
+    },
+    {
+      path: 'logging',
       children: [
         {
-          path: 'mood',
-          element: <MoodLogging />
+          path: 'add',
+          element: <AddEntry />
         }
       ]
     },
