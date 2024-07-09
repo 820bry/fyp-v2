@@ -14,17 +14,17 @@ import Typography from '@mui/material/Typography';
 import MainCard from '../../ui-component/cards/MainCard';
 import LoadingCard from '../../ui-component/cards/Skeleton/LoadingCard';
 
-// assets
-import AddIcon from '@mui/icons-material/Add';
+import { emojis } from '../../store/emojis';
 
 // ===========================|| DASHBOARD DEFAULT - EARNING CARD ||=========================== //
 
-const MoodCard = ({ isLoading }) => {
+const MoodCard = ({ isLoading, scale, date }) => {
   const theme = useTheme();
 
-  const handleAdd = (event) => {
-    console.log("hello");
-  };
+  const getEmoji = (value) => {
+    const emoji = emojis.find(e => e.value === value);
+    return emoji ? emoji.label : null;
+  }
 
   return (
     <>
@@ -34,7 +34,6 @@ const MoodCard = ({ isLoading }) => {
             <MainCard
             border={false}
             content={false}
-            onClick={handleAdd}
             sx={{
                 cursor: 'pointer',
                 bgcolor: 'primary.dark',
@@ -80,7 +79,7 @@ const MoodCard = ({ isLoading }) => {
                                 }}
                                 >
                                 {/* <AddIcon /> */}
-                                &#128529;
+                                {getEmoji(scale)}
                                 </Avatar>
                             </Grid>
 
@@ -90,7 +89,7 @@ const MoodCard = ({ isLoading }) => {
                             <Grid container alignItems="center">
                                 <Grid item>
                                     <Typography sx={{ fontSize: '1.5rem', fontWeight: 500, mr: 1, mt: 1.75, mb: 0.75 }}>
-                                        02/07/2024
+                                        {date}
                                     </Typography>
                                 </Grid>
                             </Grid>
@@ -116,7 +115,9 @@ const MoodCard = ({ isLoading }) => {
 };
 
 MoodCard.propTypes = {
-  isLoading: PropTypes.bool
+  isLoading: PropTypes.bool,
+  scale: PropTypes.number,
+  date: PropTypes.string
 };
 
 export default MoodCard;

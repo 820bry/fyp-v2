@@ -2,14 +2,14 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import { setPersistence, browserSessionPersistence, signInWithEmailAndPassword } from 'firebase/auth';
+import { setPersistence, browserSessionPersistence, browserLocalPersistence, signInWithEmailAndPassword } from 'firebase/auth';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
+import Chip from '@mui/material/Chip';
 import Divider from '@mui/material/Divider';
 import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -21,6 +21,7 @@ import InputLabel from '@mui/material/InputLabel';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
+import CircularProgress from '@mui/material/CircularProgress';
 
 // third party
 import * as Yup from 'yup';
@@ -39,7 +40,27 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 const AuthLogin = ({ ...others }) => {
   const theme = useTheme();
   const navigate = useNavigate();
-  const [checked, setChecked] = useState(true);
+
+  const [checked, setChecked] = useState(false);
+  const [status, setStatus] = useState();
+  const [error, setError] = useState('');
+
+  function renderComponent(errMsg = '') {
+    switch(status) {
+      case 'loading':
+        return <CircularProgress />;
+      case 'error':
+        return (
+          <Chip
+            label={errMsg}
+            variant="outlined"
+            color="error"
+          />
+        );
+      default:
+        return;
+    }
+  }
 
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => {
@@ -53,21 +74,30 @@ const AuthLogin = ({ ...others }) => {
 
   // Login Process
   const handleSubmit = (event) => {
+    setStatus('loading');
+
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
-    setPersistence(auth, browserSessionPersistence)
+    // set what kind of auth persistence needs to be used; local for 'remember me', session otherwise
+    const persistence = (data.get('checked') == 'on' ? browserLocalPersistence : browserSessionPersistence);
+
+    setPersistence(auth, persistence)
       .then(() => {
         return signInWithEmailAndPassword(auth, data.get('email'), data.get('password'))
           .then(() => {
             navigate('/home');
           })
           .catch((error) => {
-            console.log("Login error: " + error.code + " : " + error.message);
+            
+            setError('Login returned the following error: ' + error.code);
+            setStatus('error');
           });
       })
       .catch((error) => {
-        console.error("Set persistence error: " + error.code + " : " + error.message);
+        // console.error("Set persistence error: " + error.code + " : " + error.message);
+        setError(error.code);
+        setStatus('error');
       });
   }
 
@@ -86,6 +116,7 @@ const AuthLogin = ({ ...others }) => {
           </Box>
         </Grid>
         <Grid item xs={12} container alignItems="center" justifyContent="center">
+          {renderComponent(error)}
         </Grid>
       </Grid>
 

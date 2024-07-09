@@ -1,28 +1,64 @@
 import { useState, useEffect } from 'react';
 
+import { onAuthStateChanged } from 'firebase/auth';
+import { collection, getDocs } from 'firebase/firestore';
+
 // material-ui
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
+import CircularProgress from '@mui/material/CircularProgress';
 
 // project imports
 import AddMoodCard from './AddMoodCard';
 import MoodCard from './MoodCard';
 
 import { gridSpacing } from '../../store/constant';
-
+import { auth, firestore } from '../../firebase';
 
 
 const MoodLogging = () => {
 
     const [isLoading, setLoading] = useState(true);
+    const [userData, setUserData] = useState([]);
+
+    const retrieveData = () => {
+        onAuthStateChanged(auth, async user => {
+            if(user) {
+                const uid = user.uid;
+                
+                try {
+                    await getDocs(collection(firestore, "users", uid, "mood"))
+                        .then((data) => {
+                            data.forEach((doc) => {
+                                console.log(doc.data());
+                                setUserData(previous => {
+                                    return [...previous, doc.data()];
+                                });
+                            })
+                        });
+                        // finished retrieving data
+                        console.log("done");
+                        setLoading(false);
+
+                } catch(e) {
+                    console.error(e);
+                }
+            } else {
+                // no user found
+                return (<span>no user logon.</span>)
+            }
+        });
+    }
+
 
     useEffect(() => {
-      setLoading(false);
+        retrieveData();
     }, []);
 
     return (
+
         <Card sx={{ 
             mb: 3, 
             boxShadow: 6,
@@ -54,9 +90,20 @@ const MoodLogging = () => {
                         <Grid item lg={3} md={6} sm={6} xs={12}>
                             <AddMoodCard />
                         </Grid>
-                        <Grid item lg={3} md={6} sm={6} xs={12}>
-                            <MoodCard />
-                        </Grid>
+                        {isLoading ? (
+                            <Grid item lg={3} md={6} sm={6} xs={12}>
+                                <MoodCard isLoading="true" />
+                            </Grid>
+                        ):(
+                            userData.map((data) => (
+                                <Grid item lg={3} md={6} sm={6} xs={12}>
+                                    <MoodCard 
+                                        date={data.date}
+                                        scale={data.scale}
+                                    />
+                                </Grid>
+                            ))
+                        )}
                     </Grid>
                 </Grid>
             </Grid>

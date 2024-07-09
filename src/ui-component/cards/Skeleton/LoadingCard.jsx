@@ -13,7 +13,7 @@ const EarningCard = () => (
         <Grid item>
           <Grid container justifyContent="space-between">
             <Grid item>
-              <Skeleton variant="rectangular" width={44} height={44} />
+              <Skeleton variant="rectangular" width={44} height={34} />
             </Grid>
             <Grid item>
               <Skeleton variant="rectangular" width={34} height={34} />
@@ -21,7 +21,7 @@ const EarningCard = () => (
           </Grid>
         </Grid>
         <Grid item>
-          <Skeleton variant="rectangular" sx={{ my: 2 }} height={40} />
+          <Skeleton variant="rectangular" sx={{ my: 1.6 }} height={30} />
         </Grid>
         <Grid item>
           <Skeleton variant="rectangular" height={30} />

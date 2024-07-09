@@ -10,7 +10,7 @@ import Typography from '@mui/material/Typography';
 
 // project imports
 import MainCard from '../../ui-component/cards/MainCard';
-import { getCurrentDate } from '../../utils/getCurrentDate';
+import { getDate } from '../../utils/dateandtime';
 
 // assets
 import AddIcon from '@mui/icons-material/Add';
@@ -20,7 +20,7 @@ const AddMoodCard = ({ isLoading }) => {
   const theme = useTheme();
   const navigate = useNavigate();
 
-  const today = getCurrentDate();
+  const today = getDate();
 
   // Go to add mood entry screen
   const handleAdd = () => {
