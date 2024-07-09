@@ -8,7 +8,6 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
-import CircularProgress from '@mui/material/CircularProgress';
 
 // project imports
 import AddMoodCard from './AddMoodCard';
@@ -39,7 +38,6 @@ const MoodLogging = () => {
                             })
                         });
                         // finished retrieving data
-                        console.log("done");
                         setLoading(false);
 
                 } catch(e) {
@@ -92,12 +90,13 @@ const MoodLogging = () => {
                         </Grid>
                         {isLoading ? (
                             <Grid item lg={3} md={6} sm={6} xs={12}>
-                                <MoodCard isLoading="true" />
+                                <MoodCard isLoading />
                             </Grid>
                         ):(
                             userData.map((data) => (
                                 <Grid item lg={3} md={6} sm={6} xs={12}>
                                     <MoodCard 
+                                        key={data.id}
                                         date={data.date}
                                         scale={data.scale}
                                     />

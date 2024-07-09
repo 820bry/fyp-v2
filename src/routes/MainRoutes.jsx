@@ -10,6 +10,7 @@ const DashboardDefault = Loadable(lazy(() => import('../views/dashboard')));
 // logging routing
 const MoodLogging = Loadable(lazy(() => import('../views/MoodLogging')));
 const AddEntry = Loadable(lazy(() => import("../views/MoodLogging/AddEntry")));
+const Assessment = Loadable(lazy(() => import("../views/Assessment")));
 
 // utilities routing
 const UtilsTypography = Loadable(lazy(() => import('../views/utilities/Typography')));
@@ -36,6 +37,10 @@ const MainRoutes = {
     {
       path: 'logging',
       element: <MoodLogging />
+    },
+    {
+      path: 'assessment',
+      element: <Assessment />
     },
     {
       path: 'logging',

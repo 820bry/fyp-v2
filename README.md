@@ -22,3 +22,4 @@ Mental Assessment
 
 ## Issues
 - ~~Sometimes it fails to get user and uid (dk what the conditions are)~~ Fixed in sessionprovider (9/7/2024)
+- (mobile only) Pressing an option in the sidebar does not close it

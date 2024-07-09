@@ -10,10 +10,10 @@ const logging = {
     type: 'group',
     children: [
         {
-            id: 'daily',
+            id: 'logging',
             title: 'Mood Logging',
             type: 'item',
-            url: '/logging/',
+            url: '/logging',
             icon: icons.IconBrain,
             breadcrumbs: false
         },
@@ -21,7 +21,7 @@ const logging = {
             id: 'assessment',
             title: 'Mental Assessment',
             type: 'item',
-            url: '/logging/assessment',
+            url: '/assessment',
             icon: icons.IconClipboardData,
             breadcrumbs: false
         }

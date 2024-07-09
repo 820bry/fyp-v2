@@ -264,7 +264,7 @@ const AddEntry = () => {
                             py: 1.5
                         }}
                     >
-                        Choose the words from the list below on what's impacting how you feel today?.
+                        Choose the words from the list below on what's impacting how you feel today.
                     </Typography>
                 </Box>
             </Box>
