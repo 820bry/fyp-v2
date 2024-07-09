@@ -7,15 +7,15 @@ import { auth } from '../firebase'
 export default function SessionProvider({ children }){
 
     const [user, setUser] = useState(null)
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
     // const { pathname } = useLocation();
     // const needAuthRoutes = ["/", "/home", "/logging"];
 
     useEffect(() => {
-        onAuthStateChanged(auth, async (user) => {
+        onAuthStateChanged(auth, (user) => {
 
             if (!user) {
-                await navigate("/login")
+                navigate("/login")
             } else {
                 // testing only
                 // console.log("session provider: " + user.uid);
