@@ -21,7 +21,7 @@ export default defineConfig({
         name:"MentalQuest - Mental Health Support System",
         short_name:"MentalQuest",
         description:"A Mental Health Support System for a Final Year Project",
-        theme_color: "#c9f4e4",
+        theme_color: "#ffffff",
         display: "standalone",  
         icons:[
           {  
