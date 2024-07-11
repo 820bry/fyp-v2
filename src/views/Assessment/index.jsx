@@ -23,21 +23,21 @@ import { gridSpacing } from '../../store/constant';
 const Assessment = () => {
 
     const [scores, setScores] = useState(Array(22).fill(null));
-
-    /*
-    TODO
-    - Each radio button onclick will set value corresponding to the question index (ques no. - 1 bcoz array starts from 0)
-    - Function to check for unanswered questions (check which index is still null and focus on that question)
-    - Auto scroll after answering a section (maybe)
-    - Calculate and summary screen (see ChatGPT)
-    */
+    const [started, setStarted] = useState(false);
 
     const handleRadioBtn = (index, value) => {
-        console.log("Question " + index + ": " + value);
+        // console.log("Question " + index + ": " + value);
+
+        const current = [...scores];
+        current[index - 1] = parseInt(value); 
+        setScores(current);
     }
 
     const handleSubmit = () => {
+        const total = scores.reduce((acc, curr) => acc + (curr !== null ? curr : 0), 0);
+
         console.log(scores);
+        // console.log(total);
     }
 
     const startPage = (
@@ -69,7 +69,7 @@ const Assessment = () => {
             <Grid item xs={12}>
                 <Box sx={{ mt: 2, px: '10%' }}>
                     <AnimateButton>
-                        <Button fullWidth size="large" type="submit" variant="contained" color="secondary">
+                        <Button fullWidth size="large" type="submit" variant="contained" color="secondary" onClick={() => setStarted(true)}>
                             Start Assessment
                         </Button>   
                     </AnimateButton>
@@ -122,7 +122,7 @@ const Assessment = () => {
             </SubCard>
             <SubCard title="Question 3 - Have you experienced any mood swings or sudden changes in your mood?" sx={{my:2}}>
                 <FormControl>
-                    <RadioGroup name="3" id="3">
+                    <RadioGroup name="3" id="3" onChange={(e, val) => handleRadioBtn(3, val)}>
                         <FormControlLabel value="0" control={<Radio />} label="Not at all" />
                         <FormControlLabel value="1" control={<Radio />} label="Rarely" />
                         <FormControlLabel value="2" control={<Radio />} label="Sometimes" />
@@ -135,7 +135,7 @@ const Assessment = () => {
         <MainCard title="Anxiety and Stress" sx={{my:2}}>
             <SubCard title="Question 4 - Have you been feeling nervous, anxious, or on edge?" sx={{my:2}}>
                 <FormControl>
-                    <RadioGroup name="4" id="4">
+                    <RadioGroup name="4" id="4" onChange={(e, val) => handleRadioBtn(4, val)}>
                         <FormControlLabel value="0" control={<Radio />} label="Not at all" />
                         <FormControlLabel value="1" control={<Radio />} label="Several days" />
                         <FormControlLabel value="2" control={<Radio />} label="More than half the days" />
@@ -145,7 +145,7 @@ const Assessment = () => {
             </SubCard>
             <SubCard title="Question 5 - Do you find it hard to control your worrying?" sx={{my:2}}>
                 <FormControl>
-                    <RadioGroup name="5" id="5">
+                    <RadioGroup name="5" id="5" onChange={(e, val) => handleRadioBtn(5, val)}>
                         <FormControlLabel value="0" control={<Radio />} label="Not at all" />
                         <FormControlLabel value="1" control={<Radio />} label="Several days" />
                         <FormControlLabel value="2" control={<Radio />} label="More than half the days" />
@@ -155,7 +155,7 @@ const Assessment = () => {
             </SubCard>
             <SubCard title="Question 6 - Have you been experiencing excessive stress in your daily life?" sx={{my:2}}>
                 <FormControl>
-                    <RadioGroup name="6" id="6">
+                    <RadioGroup name="6" id="6" onChange={(e, val) => handleRadioBtn(6, val)}>
                         <FormControlLabel value="0" control={<Radio />} label="Not at all" />
                         <FormControlLabel value="1" control={<Radio />} label="Rarely" />
                         <FormControlLabel value="2" control={<Radio />} label="Sometimes" />
@@ -168,7 +168,7 @@ const Assessment = () => {
         <MainCard title="Sleep Patterns" sx={{my:2}}>
             <SubCard title="Question 7 - How has your sleep been recently?" sx={{my:2}}>
                 <FormControl>
-                    <RadioGroup name="7" id="7">
+                    <RadioGroup name="7" id="7" onChange={(e, val) => handleRadioBtn(7, val)}>
                         <FormControlLabel value="0" control={<Radio />} label="Very good" />
                         <FormControlLabel value="1" control={<Radio />} label="Good" />
                         <FormControlLabel value="2" control={<Radio />} label="Fair" />
@@ -179,7 +179,7 @@ const Assessment = () => {
             </SubCard>
             <SubCard title="Question 8 - Do you feel rested when you wake up in the morning?" sx={{my:2}}>
                 <FormControl>
-                    <RadioGroup name="8" id="8">
+                    <RadioGroup name="8" id="8" onChange={(e, val) => handleRadioBtn(8, val)}>
                         <FormControlLabel value="0" control={<Radio />} label="Always" />
                         <FormControlLabel value="1" control={<Radio />} label="Often" />
                         <FormControlLabel value="2" control={<Radio />} label="Sometimes" />
@@ -192,7 +192,7 @@ const Assessment = () => {
         <MainCard title="Energy and Fatigue" sx={{my:2}}>
             <SubCard title="Question 9 - Have you been feeling more tired or lacking energy lately?" sx={{my:2}}>
                 <FormControl>
-                    <RadioGroup name="9" id="9">
+                    <RadioGroup name="9" id="9" onChange={(e, val) => handleRadioBtn(9, val)}>
                         <FormControlLabel value="0" control={<Radio />} label="Not at all" />
                         <FormControlLabel value="1" control={<Radio />} label="Several days" />
                         <FormControlLabel value="2" control={<Radio />} label="More than half the days" />
@@ -202,7 +202,7 @@ const Assessment = () => {
             </SubCard>
             <SubCard title="Question 10 - Do you find it difficult to get motivated or complete daily tasks?" sx={{my:2}}>
                 <FormControl>
-                    <RadioGroup name="10" id="10">
+                    <RadioGroup name="10" id="10" onChange={(e, val) => handleRadioBtn(10, val)}>
                         <FormControlLabel value="0" control={<Radio />} label="Not at all" />
                         <FormControlLabel value="1" control={<Radio />} label="Rarely" />
                         <FormControlLabel value="2" control={<Radio />} label="Sometimes" />
@@ -215,7 +215,7 @@ const Assessment = () => {
         <MainCard title="Concentration and Memory" sx={{my:2}}>
             <SubCard title="Question 11 - Have you had trouble concentrating or making decisions?" sx={{my:2}}>
                 <FormControl>
-                    <RadioGroup name="11" id="11">
+                    <RadioGroup name="11" id="11" onChange={(e, val) => handleRadioBtn(11, val)}>
                         <FormControlLabel value="0" control={<Radio />} label="Not at all" />
                         <FormControlLabel value="1" control={<Radio />} label="Several days" />
                         <FormControlLabel value="2" control={<Radio />} label="More than half the days" />
@@ -225,7 +225,7 @@ const Assessment = () => {
             </SubCard>
             <SubCard title="Question 12 - Do you find yourself forgetting things more often?" sx={{my:2}}>
                 <FormControl>
-                    <RadioGroup name="12" id="12">
+                    <RadioGroup name="12" id="12" onChange={(e, val) => handleRadioBtn(12, val)}>
                         <FormControlLabel value="0" control={<Radio />} label="Not at all" />
                         <FormControlLabel value="1" control={<Radio />} label="Rarely" />
                         <FormControlLabel value="2" control={<Radio />} label="Sometimes" />
@@ -238,18 +238,16 @@ const Assessment = () => {
         <MainCard title="Appetite and Eating Habits" sx={{my:2}}>
             <SubCard title="Question 13 - Have you experienced any changes in your appetite or weight?" sx={{my:2}}>
                 <FormControl>
-                    <RadioGroup name="13" id="13">
+                    <RadioGroup name="13" id="13" onChange={(e, val) => handleRadioBtn(13, val)}>
                         <FormControlLabel value="0" control={<Radio />} label="No change" />
-                        <FormControlLabel value="1" control={<Radio />} label="Increased appetite" />
-                        <FormControlLabel value="2" control={<Radio />} label="Decreased appetite" />
-                        <FormControlLabel value="1" control={<Radio />} label="Increased weight" />
-                        <FormControlLabel value="2" control={<Radio />} label="Decreased weight" />
+                        <FormControlLabel value="1" control={<Radio />} label="Increased appetite and/or weight" />
+                        <FormControlLabel value="2" control={<Radio />} label="Decreased appetite and/or weight" />
                     </RadioGroup>
                 </FormControl> 
             </SubCard>
             <SubCard title="Question 14 - Do you find yourself eating too much or too little?" sx={{my:2}}>
                 <FormControl>
-                    <RadioGroup name="14" id="14">
+                    <RadioGroup name="14" id="14" onChange={(e, val) => handleRadioBtn(14, val)}>
                         <FormControlLabel value="0" control={<Radio />} label="Not at all" />
                         <FormControlLabel value="1" control={<Radio />} label="Rarely" />
                         <FormControlLabel value="2" control={<Radio />} label="Sometimes" />
@@ -262,7 +260,7 @@ const Assessment = () => {
         <MainCard title="Social Interaction" sx={{my:2}}>
             <SubCard title="Question 15 - Have you been withdrawing from friends or family?" sx={{my:2}}>
                 <FormControl>
-                    <RadioGroup name="15" id="15">
+                    <RadioGroup name="15" id="15" onChange={(e, val) => handleRadioBtn(15, val)}>
                         <FormControlLabel value="0" control={<Radio />} label="Not at all" />
                         <FormControlLabel value="1" control={<Radio />} label="Rarely" />
                         <FormControlLabel value="2" control={<Radio />} label="Sometimes" />
@@ -273,7 +271,7 @@ const Assessment = () => {
             </SubCard>
             <SubCard title="Question 16 - Do you feel lonely or isolated?" sx={{my:2}}>
                 <FormControl>
-                    <RadioGroup name="16" id="16">
+                    <RadioGroup name="16" id="16" onChange={(e, val) => handleRadioBtn(16, val)}>
                         <FormControlLabel value="0" control={<Radio />} label="Not at all" />
                         <FormControlLabel value="1" control={<Radio />} label="Rarely" />
                         <FormControlLabel value="2" control={<Radio />} label="Sometimes" />
@@ -286,7 +284,7 @@ const Assessment = () => {
         <MainCard title="Interest and Pleasure" sx={{my:2}}>
             <SubCard title="Question 17 - Have you lost interest or pleasure in activities you used to enjoy?" sx={{my:2}}>
                 <FormControl>
-                    <RadioGroup name="17" id="17">
+                    <RadioGroup name="17" id="17" onChange={(e, val) => handleRadioBtn(17, val)}>
                         <FormControlLabel value="0" control={<Radio />} label="Not at all" />
                         <FormControlLabel value="1" control={<Radio />} label="Rarely" />
                         <FormControlLabel value="2" control={<Radio />} label="Sometimes" />
@@ -297,7 +295,7 @@ const Assessment = () => {
             </SubCard>
             <SubCard title="Question 18 - Do you feel a lack of enthusiasm or excitement about life?" sx={{my:2}}>
                 <FormControl>
-                    <RadioGroup name="18" id="18">
+                    <RadioGroup name="18" id="18" onChange={(e, val) => handleRadioBtn(18, val)}>
                         <FormControlLabel value="0" control={<Radio />} label="Not at all" />
                         <FormControlLabel value="1" control={<Radio />} label="Rarely" />
                         <FormControlLabel value="2" control={<Radio />} label="Sometimes" />
@@ -310,7 +308,7 @@ const Assessment = () => {
         <MainCard title="Thoughts and Feelings" sx={{my:2}}>
             <SubCard title="Question 19 - Have you had any thoughts of harming yourself or others?" sx={{my:2}}>
                 <FormControl>
-                    <RadioGroup name="19" id="19">
+                    <RadioGroup name="19" id="19" onChange={(e, val) => handleRadioBtn(19, val)}>
                         <FormControlLabel value="0" control={<Radio />} label="Not at all" />
                         <FormControlLabel value="1" control={<Radio />} label="Rarely" />
                         <FormControlLabel value="2" control={<Radio />} label="Sometimes" />
@@ -321,7 +319,7 @@ const Assessment = () => {
             </SubCard>
             <SubCard title="Question 20 - Have you been feeling guilty or worthless?" sx={{my:2}}>
                 <FormControl>
-                    <RadioGroup name="20" id="20">
+                    <RadioGroup name="20" id="20" onChange={(e, val) => handleRadioBtn(20, val)}>
                         <FormControlLabel value="0" control={<Radio />} label="Not at all" />
                         <FormControlLabel value="1" control={<Radio />} label="Several days" />
                         <FormControlLabel value="2" control={<Radio />} label="More than half the days" />
@@ -333,7 +331,7 @@ const Assessment = () => {
         <MainCard title="Coping and Resilience" sx={{my:2}}>
             <SubCard title="Question 21 - How do you usually cope with stress or difficult situations?" sx={{my:2}}>
                 <FormControl>
-                    <RadioGroup name="21" id="21">
+                    <RadioGroup name="21" id="21" onChange={(e, val) => handleRadioBtn(21, val)}>
                         <FormControlLabel value="0" control={<Radio />} label="Very well" />
                         <FormControlLabel value="1" control={<Radio />} label="Well" />
                         <FormControlLabel value="2" control={<Radio />} label="Fair" />
@@ -344,7 +342,7 @@ const Assessment = () => {
             </SubCard>
             <SubCard title="Question 22 - Do you feel that you have enough support from friends or family?" sx={{my:2}}>
                 <FormControl>
-                    <RadioGroup name="22" id="22">
+                    <RadioGroup name="22" id="22" onChange={(e, val) => handleRadioBtn(22, val)}>
                         <FormControlLabel value="0" control={<Radio />} label="Always" />
                         <FormControlLabel value="1" control={<Radio />} label="Often" />
                         <FormControlLabel value="2" control={<Radio />} label="Sometimes" />
@@ -394,7 +392,7 @@ const Assessment = () => {
             py: 3
         }}
         >
-            {questions}
+            {started ? questions : startPage}
         </Card>
         </>
     )

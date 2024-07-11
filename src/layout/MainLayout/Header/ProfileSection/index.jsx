@@ -10,12 +10,8 @@ import { doc, getDoc } from "firebase/firestore";
 import { useTheme } from '@mui/material/styles';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
 import Chip from '@mui/material/Chip';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
-import Divider from '@mui/material/Divider';
-import Grid from '@mui/material/Grid';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -23,8 +19,10 @@ import ListItemText from '@mui/material/ListItemText';
 import Paper from '@mui/material/Paper';
 import Popper from '@mui/material/Popper';
 import Stack from '@mui/material/Stack';
-import Switch from '@mui/material/Switch';
 import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+import Grid from '@mui/material/Grid';
+import IconButton from '@mui/material/IconButton'
 
 // third-party
 import PerfectScrollbar from 'react-perfect-scrollbar';
@@ -34,6 +32,7 @@ import MainCard from '../../../../ui-component/cards/MainCard';
 import Transitions from '../../../../ui-component/extended/Transitions';
 import User1 from '../../../../assets/images/users/user-round.svg';
 import { auth, firestore } from '../../../../firebase';
+import { gridSpacing } from '../../../../store/constant';
 
 // assets
 import { IconLogout, IconSearch, IconSettings, IconUser } from '@tabler/icons-react';
@@ -43,12 +42,7 @@ import { IconLogout, IconSearch, IconSettings, IconUser } from '@tabler/icons-re
 const ProfileSection = () => {
   const theme = useTheme();
   const customization = useSelector((state) => state.customization);
-  const navigate = useNavigate();
 
-  const [sdm, setSdm] = useState(true);
-  const [value, setValue] = useState('');
-  const [notification, setNotification] = useState(false);
-  const [selectedIndex, setSelectedIndex] = useState(-1);
   const [open, setOpen] = useState(false);
 
   const [firstName, setFirstName] = useState('');
@@ -76,7 +70,7 @@ const ProfileSection = () => {
   const anchorRef = useRef(null);
   const handleLogout = async () => {
     signOut(auth).then(() => {
-      // Sign-out successful.
+      // Sign-out successful, auto redirect done by SessionProvider.
     }).catch((error) => {
       console.error(error.code + " : " + error.message);
     });
@@ -89,12 +83,16 @@ const ProfileSection = () => {
     setOpen(false);
   };
 
-  const handleListItemClick = (event, index, route = '') => {
-    setSelectedIndex(index);
+  const handleListItemClick = (event, index) => {
     handleClose(event);
 
-    if (route && route !== '') {
-      navigate(route);
+    switch(index) {
+      case 0:
+        handleModalOpen();
+        break;
+      case 1:
+        handleLogout();
+        break;
     }
   };
   const handleToggle = () => {
@@ -110,8 +108,51 @@ const ProfileSection = () => {
     prevOpen.current = open;
   }, [open]);
 
+
+  // settings page
+  const [modalOpen, setModalOpen] = useState(false);
+  const handleModalOpen = () => setModalOpen(true);
+  const handleModalClose = () => setModalOpen(false);
+
+  const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: '75%',
+    bgcolor: 'background.paper',
+    p: 4,
+  };
+
   return (
     <>
+      {/* Settings Popup */}
+      <Modal
+        open={modalOpen}
+          onClose={handleModalClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+        <Grid container spacing={gridSpacing}>
+            <Grid item xs={12} sx={{m: 2}}>
+              <Box
+              sx={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center'
+              }}
+              >
+                <IconButton>
+                  <Avatar>xdd</Avatar>
+                </IconButton>
+              </Box>
+            </Grid>
+          </Grid>
+        </Box>
+      </Modal>
+
+
       <Chip
         sx={{
           height: '48px',
@@ -207,8 +248,7 @@ const ProfileSection = () => {
                       >
                         <ListItemButton
                           sx={{ borderRadius: `${customization.borderRadius}px` }}
-                          selected={selectedIndex === 0}
-                          onClick={(event) => handleListItemClick(event, 0, '#')}
+                          onClick={(event) => handleListItemClick(event, 0)}
                         >
                           <ListItemIcon>
                             <IconSettings stroke={1.5} size="1.3rem" />
@@ -217,8 +257,7 @@ const ProfileSection = () => {
                         </ListItemButton>
                         <ListItemButton
                           sx={{ borderRadius: `${customization.borderRadius}px` }}
-                          selected={selectedIndex === 4}
-                          onClick={handleLogout}
+                          onClick={(event) => handleListItemClick(event, 1)}
                         >
                           <ListItemIcon>
                             <IconLogout stroke={1.5} size="1.3rem" />

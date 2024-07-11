@@ -129,6 +129,11 @@ export default function themeTypography(theme) {
       width: '44px',
       height: '44px',
       fontSize: '1.5rem'
+    },
+    XLAvatar: {
+      width: '74px',
+      height: '74px',
+      fontSize: '2.4rem'
     }
   };
 }

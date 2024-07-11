@@ -18,15 +18,32 @@ import { emojis } from '../../store/emojis';
 
 // ===========================|| DASHBOARD DEFAULT - EARNING CARD ||=========================== //
 
-const MoodCard = ({ isLoading, scale, date }) => {
-  const theme = useTheme();
+const MoodCard = ({ isLoading, scale, date, onClick }) => {
+    const theme = useTheme();
 
-  const getEmoji = (value) => {
+    const getEmoji = (value) => {
     const emoji = emojis.find(e => e.value === value);
-    return emoji ? emoji.label : null;
-  }
+        return emoji ? emoji.label : null;
+    }
 
-  return (
+    const getDescription = (value) => {
+        switch(value) {
+            case 1:
+                return 'Very Unpleasant Day';
+            case 2:
+                return 'Unpleasant Day';
+            case 3:
+                return 'Neutral Day';
+            case 4:
+                return 'Pleasant Day';
+            case 5:
+                return 'Very Pleasant Day';
+            default:
+                return '';
+        }
+    }
+
+    return (
     <>
         {isLoading ? (
             <LoadingCard />
@@ -34,6 +51,7 @@ const MoodCard = ({ isLoading, scale, date }) => {
             <MainCard
             border={false}
             content={false}
+            onClick={onClick}
             sx={{
                 cursor: 'pointer',
                 bgcolor: 'primary.dark',
@@ -78,7 +96,6 @@ const MoodCard = ({ isLoading, scale, date }) => {
                                     mt: 1
                                 }}
                                 >
-                                {/* <AddIcon /> */}
                                 {getEmoji(scale)}
                                 </Avatar>
                             </Grid>
@@ -102,8 +119,7 @@ const MoodCard = ({ isLoading, scale, date }) => {
                                 color: 'primary.200'
                             }}
                             >
-                            {/* TODO: Placeholder text but this would show the details of the entry */}
-                            Slightly unpleasant day
+                            {getDescription(scale)}
                             </Typography>
                         </Grid>
                     </Grid>
@@ -111,7 +127,7 @@ const MoodCard = ({ isLoading, scale, date }) => {
             </MainCard>
         )}
         </>
-  );
+    );
 };
 
 MoodCard.propTypes = {

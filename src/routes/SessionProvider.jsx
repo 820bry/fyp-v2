@@ -16,9 +16,10 @@ export default function SessionProvider({ children }){
 
             if (!user) {
                 navigate("/login")
+                console.log("no user logon");
             } else {
                 // testing only
-                // console.log("session provider: " + user.uid);
+                console.log("session provider: " + user.uid);
             }
         });
     }, [])
