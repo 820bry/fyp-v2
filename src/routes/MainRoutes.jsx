@@ -11,6 +11,10 @@ const DashboardDefault = Loadable(lazy(() => import('../views/dashboard')));
 const MoodLogging = Loadable(lazy(() => import('../views/MoodLogging')));
 const AddEntry = Loadable(lazy(() => import("../views/MoodLogging/AddEntry")));
 const Assessment = Loadable(lazy(() => import("../views/Assessment")));
+const Summary = Loadable(lazy(() => import('../views/Assessment/Summary')));
+
+// exercise routing
+const Exercise = Loadable(lazy(() => import('../views/Exercise')));
 
 // utilities routing
 const UtilsTypography = Loadable(lazy(() => import('../views/utilities/Typography')));
@@ -19,7 +23,7 @@ const UtilsShadow = Loadable(lazy(() => import('../views/utilities/Shadow')));
 
 // sample page routing
 const SamplePage = Loadable(lazy(() => import('../views/sample-page')));
-
+  
 // ==============================|| MAIN ROUTING ||============================== //
 
 const MainRoutes = {
@@ -39,10 +43,6 @@ const MainRoutes = {
       element: <MoodLogging />
     },
     {
-      path: 'assessment',
-      element: <Assessment />
-    },
-    {
       path: 'logging',
       children: [
         {
@@ -50,6 +50,23 @@ const MainRoutes = {
           element: <AddEntry />
         }
       ]
+    },
+    {
+      path: 'assessment',
+      element: <Assessment />
+    },
+    {
+      path: 'assessment',
+      children: [
+        {
+          path: 'summary',
+          element: <Summary />
+        }
+      ]
+    },
+    {
+      path: 'exercise',
+      element: <Exercise />
     },
     {
       path: 'utils',

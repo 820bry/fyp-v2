@@ -9,10 +9,10 @@ const exercises = {
     type: 'group',
     children: [
         {
-            id: 'breathing',
+            id: 'exercise',
             title: 'Breathing Exercises',
             type: 'item',
-            url: '/breathing',
+            url: '/exercise',
             icon: icons.IconLungs,
             breadcrumbs: false
         }

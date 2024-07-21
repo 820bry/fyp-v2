@@ -24,9 +24,6 @@ import Modal from '@mui/material/Modal';
 import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton'
 
-// third-party
-import PerfectScrollbar from 'react-perfect-scrollbar';
-
 // project imports
 import MainCard from '../../../../ui-component/cards/MainCard';
 import Transitions from '../../../../ui-component/extended/Transitions';
@@ -134,19 +131,45 @@ const ProfileSection = () => {
           aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-        <Grid container spacing={gridSpacing}>
-            <Grid item xs={12} sx={{m: 2}}>
-              <Box
-              sx={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center'
-              }}
-              >
-                <IconButton>
-                  <Avatar>xdd</Avatar>
-                </IconButton>
-              </Box>
+          <Grid item xs={12}>
+            <Grid container spacing={gridSpacing}>
+              <Grid item lg={6} md={6} sm={6} xs={12}>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}
+                >
+                  <IconButton>
+                    <Avatar
+                      src={User1}
+                      sx={{
+                        width: '270px',
+                        height: '270px'
+                      }}
+                    >
+                      xdd
+                    </Avatar>
+                  </IconButton>
+                </Box>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}
+                >
+                  <Typography>Click on Avatar to Upload New Profile Photo</Typography>
+                </Box>
+              </Grid>
+              <Grid item lg={6} md={6} sm={6} xs={12}>
+                <Box>
+                  <IconButton>
+                    <Avatar>xdd</Avatar>
+                  </IconButton>
+                </Box>
+              </Grid>
             </Grid>
           </Grid>
         </Box>
@@ -228,45 +251,43 @@ const ProfileSection = () => {
                       </Stack>
                     </Stack>
                   </Box>
-                  <PerfectScrollbar style={{ height: '100%', maxHeight: 'calc(100vh - 250px)', overflowX: 'hidden' }}>
-                    <Box sx={{ p: 2, pt: 0 }}>
-                      <List
-                        component="nav"
-                        sx={{
-                          width: '100%',
-                          maxWidth: 350,
-                          minWidth: 300,
-                          backgroundColor: theme.palette.background.paper,
-                          borderRadius: '10px',
-                          [theme.breakpoints.down('md')]: {
-                            minWidth: '100%'
-                          },
-                          '& .MuiListItemButton-root': {
-                            mt: 0.5
-                          }
-                        }}
+                  <Box sx={{ p: 2, pt: 0 }}>
+                    <List
+                      component="nav"
+                      sx={{
+                        width: '100%',
+                        maxWidth: 350,
+                        minWidth: 300,
+                        backgroundColor: theme.palette.background.paper,
+                        borderRadius: '10px',
+                        [theme.breakpoints.down('md')]: {
+                          minWidth: '100%'
+                        },
+                        '& .MuiListItemButton-root': {
+                          mt: 0.5
+                        }
+                      }}
+                    >
+                      <ListItemButton
+                        sx={{ borderRadius: `${customization.borderRadius}px` }}
+                        onClick={(event) => handleListItemClick(event, 0)}
                       >
-                        <ListItemButton
-                          sx={{ borderRadius: `${customization.borderRadius}px` }}
-                          onClick={(event) => handleListItemClick(event, 0)}
-                        >
-                          <ListItemIcon>
-                            <IconSettings stroke={1.5} size="1.3rem" />
-                          </ListItemIcon>
-                          <ListItemText primary={<Typography variant="body2">Account Settings</Typography>} />
-                        </ListItemButton>
-                        <ListItemButton
-                          sx={{ borderRadius: `${customization.borderRadius}px` }}
-                          onClick={(event) => handleListItemClick(event, 1)}
-                        >
-                          <ListItemIcon>
-                            <IconLogout stroke={1.5} size="1.3rem" />
-                          </ListItemIcon>
-                          <ListItemText primary={<Typography variant="body2">Logout</Typography>} />
-                        </ListItemButton>
-                      </List>
-                    </Box>
-                  </PerfectScrollbar>
+                        <ListItemIcon>
+                          <IconSettings stroke={1.5} size="1.3rem" />
+                        </ListItemIcon>
+                        <ListItemText primary={<Typography variant="body2">Account Settings</Typography>} />
+                      </ListItemButton>
+                      <ListItemButton
+                        sx={{ borderRadius: `${customization.borderRadius}px` }}
+                        onClick={(event) => handleListItemClick(event, 1)}
+                      >
+                        <ListItemIcon>
+                          <IconLogout stroke={1.5} size="1.3rem" />
+                        </ListItemIcon>
+                        <ListItemText primary={<Typography variant="body2">Logout</Typography>} />
+                      </ListItemButton>
+                    </List>
+                  </Box>
                 </MainCard>
               </ClickAwayListener>
             </Paper>
