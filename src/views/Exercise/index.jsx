@@ -24,8 +24,8 @@ const contract = keyframes`
 `;
 
 const Circle = styled(Box)(( { theme, phase }) => ({
-    width: 300,
-    height: 300,
+    width: 250,
+    height: 250,
     borderRadius: '50%',
     display: 'flex',
     alignItems: 'center',
@@ -63,8 +63,8 @@ const Circle = styled(Box)(( { theme, phase }) => ({
 }));
 
 const InnerCircle = styled(Box)(({ theme }) => ({
-    width: 280,
-    height: 280,
+    width: 230,
+    height: 230,
     borderRadius: '50%',
     backgroundColor: theme.palette.background.default,
     display: 'flex',
