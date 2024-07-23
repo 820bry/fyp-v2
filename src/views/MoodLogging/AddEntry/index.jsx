@@ -70,8 +70,6 @@ const AddEntry = () => {
     }
 
     const handleSubmit = () => {
-        console.log(emoji + " " + feelings + " " + impacts);
-        console.log(getTime());
 
         onAuthStateChanged(auth, user => {
             if(user) {

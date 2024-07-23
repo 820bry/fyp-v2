@@ -187,7 +187,11 @@ const Exercise = () => {
                     }}
                 >
                     <Circle phase={phase} onClick={handleClick}>
-                        <InnerCircle />
+                        <InnerCircle>
+                            {phase === 'idle' ? <Typography variant="body1" sx={{fontWeight: 'bold'}}>Tap to Start</Typography> : 
+                             phase === 'completed'? <Typography variant="body1">Tap to Start Again</Typography> :
+                             <Typography variant="body1" sx={{color: 'grey'}}>Tap to Stop</Typography>}
+                        </InnerCircle>
                     </Circle>
                     <Box
                         sx={{
@@ -198,7 +202,7 @@ const Exercise = () => {
                         }}
                     >
                         <Fade in={fadeIn} timeout={1000}>
-                            <Typography variant="h5" sx={{ mt: 3, textAlign: 'center' }}>
+                            <Typography variant="h4" sx={{ mt: 4, textAlign: 'center' }}>
                                 {instruction}
                             </Typography>
                         </Fade>

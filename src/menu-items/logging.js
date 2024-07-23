@@ -1,8 +1,8 @@
 // assets
-import { IconBrain, IconClipboardData } from '@tabler/icons-react';
+import { IconBook2, IconClipboardData } from '@tabler/icons-react';
 
 // constant
-const icons = { IconBrain, IconClipboardData };
+const icons = { IconBook2, IconClipboardData };
 
 const logging = {
     id: 'logging',
@@ -14,7 +14,7 @@ const logging = {
             title: 'Mood Logging',
             type: 'item',
             url: '/logging',
-            icon: icons.IconBrain,
+            icon: icons.IconBook2,
             breadcrumbs: false
         },
         {

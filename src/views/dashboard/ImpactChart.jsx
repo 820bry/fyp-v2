@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState, useMemo } from 'react';
 
 import PropTypes from 'prop-types';
 
@@ -7,6 +7,7 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
 import Chart from 'react-apexcharts';
+import { parse, subDays, isAfter, isSameDay, startOfDay } from 'date-fns';
 
 import MainCard from '../../ui-component/cards/MainCard';
 import { gridSpacing } from '../../store/constant';
@@ -14,13 +15,13 @@ import { gridSpacing } from '../../store/constant';
 const ImpactChart = ({ data }) => {
     const theme = useTheme();
 
-
     const chartData = {
         height: 350,
         type: 'bar',
         options: {
             chart: {
                 id: 'bar-chart',
+                width: '100%',
                 stacked: true,
                 toolbar: {
                     show: false
@@ -28,12 +29,9 @@ const ImpactChart = ({ data }) => {
                 responsive: [{
                     breakpoint: 480,
                     options: {
-                    chart: {
-                        width: 200
-                    },
-                    legend: {
-                        position: 'bottom'
-                    }
+                        chart: {
+                            width: '100%'
+                        }
                     }
                 }]
             },
@@ -92,7 +90,7 @@ const ImpactChart = ({ data }) => {
                 <Grid item xs={12}>
                     <Grid container alignItems="center" justifyContent="space-between">
                         <Grid item>
-                            <Typography variant="h3">See what's been impacting your mood lately</Typography>
+                            <Typography variant="h3" sx={{ py: '7.7px' }}>What's having the biggest impact on you</Typography>
                         </Grid>
                     </Grid>
                 </Grid>

@@ -39,6 +39,10 @@ const AddMoodCard = ({ isLoading }) => {
             color: '#fff',
             overflow: 'hidden',
             position: 'relative',
+            '&>div': {
+              position: 'relative',
+              zIndex: 5
+            },
             '&:after': {
               content: '""',
               position: 'absolute',
@@ -86,14 +90,14 @@ const AddMoodCard = ({ isLoading }) => {
               <Grid item>
                 <Grid container alignItems="center">
                   <Grid item>
-                    <Typography sx={{ fontSize: '1.5rem', fontWeight: 500, mr: 1, mt: 1.75, mb: 0.75 }}>Add Entry</Typography>
+                    <Typography sx={{ fontSize: '2rem', fontWeight: 500, mr: 1, mt: 1.75, mb: 0.75 }}>Add Entry</Typography>
                   </Grid>
                 </Grid>
               </Grid>
               <Grid item sx={{ mb: 1.25 }}>
                 <Typography
                   sx={{
-                    fontSize: '0.8rem',
+                    fontSize: '1.1rem',
                     fontWeight: 500,
                     color: 'secondary.200'
                   }}

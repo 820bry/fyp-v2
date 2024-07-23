@@ -83,7 +83,19 @@ const MoodLogging = () => {
                             })
                         });
                         // finished retrieving data
+                        const sorted = [...userData].sort((a, b) => {
+                            const [dayA, monthA, yearA] = a.date.split('/');
+                            const [dayB, monthB, yearB] = b.date.split('/');
+
+                            const dateA = new Date(yearA, monthA - 1, dayA);
+                            const dateB = new Date(yearB, monthB - 1, dayB);
+
+                            return dateA - dateB;
+                        });
+                        // setUserData(sorted);
+
                         setLoading(false);
+                        console.log(userData);
 
                 } catch(e) {
                     console.error(e);
@@ -117,9 +129,8 @@ const MoodLogging = () => {
             >
                 <Slide direction="up" in={open} mountOnEnter unmountOnExit>
                     <Grid container spacing={gridSpacing}>
-                        <Grid xs={12}
+                        <Grid item xs={12}
                             border={false}
-                            content={false}
                             sx={{
                                 p: 2,
                                 bgcolor: 'primary.dark',
@@ -215,7 +226,7 @@ const MoodLogging = () => {
                                 <Typography sx={{fontSize: '1.3rem', fontWeight: '800'}}>{getTitle(selected.scale)}</Typography>
                             </Box>
                         </Grid>
-                        <Grid xs={12} sx={{backgroundColor: 'white', p: 2}}>
+                        <Grid item xs={12} sx={{backgroundColor: 'white', p: 2}}>
                             <Box sx={{
                                 display: 'flex',
                                 justifyContent: 'center',
@@ -279,10 +290,20 @@ const MoodLogging = () => {
                                 <MoodCard isLoading />
                             </Grid>
                         ):(
-                            userData.map((data) => (
-                                <Grid item lg={3} md={6} sm={6} xs={12}>
+
+                            userData
+                            .sort((a, b) => {
+                                const [dayA, monthA, yearA] = a.date.split('/');
+                                const [dayB, monthB, yearB] = b.date.split('/');
+                                
+                                const dateA = new Date(yearA, monthA - 1, dayA);
+                                const dateB = new Date(yearB, monthB - 1, dayB);
+                                
+                                return dateB - dateA; 
+                            })
+                            .map((data) => (
+                                <Grid item lg={3} md={6} sm={6} xs={12} key={data.date}>
                                     <MoodCard 
-                                        key={data.id}
                                         date={data.date}
                                         scale={data.scale}
                                         onClick={() => handleEntrySelect(data)}

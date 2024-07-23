@@ -6,7 +6,7 @@ import Skeleton from '@mui/material/Skeleton';
 
 // ==============================|| SKELETON - EARNING CARD ||============================== //
 
-const EarningCard = () => (
+const LoadingCard = () => (
   <Card>
     <CardContent>
       <Grid container direction="column">
@@ -21,14 +21,14 @@ const EarningCard = () => (
           </Grid>
         </Grid>
         <Grid item>
-          <Skeleton variant="rectangular" sx={{ my: 1.6 }} height={30} />
+          <Skeleton variant="rectangular" sx={{ my: 1.6 }} height={40} />
         </Grid>
         <Grid item>
-          <Skeleton variant="rectangular" height={30} />
+          <Skeleton variant="rectangular" height={40} />
         </Grid>
       </Grid>
     </CardContent>
   </Card>
 );
 
-export default EarningCard;
+export default LoadingCard;

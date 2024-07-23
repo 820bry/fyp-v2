@@ -4,7 +4,9 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { doc, collection, getDoc, getDocs } from 'firebase/firestore';
 
 // material-ui
+import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
+import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid';
 import MuiTypography from '@mui/material/Typography';
 
@@ -18,7 +20,10 @@ import ImpactChart from './ImpactChart';
 import MoodChart from './MoodChart';
 
 import MainCard from '../../ui-component/cards/MainCard';
-import AddMoodCard from '../../views/MoodLogging/AddMoodCard';
+import MoodLoggingCard from './MoodLoggingCard';
+import AssessmentCard from './AssessmentCard';
+import ExerciseCard from './ExerciseCard';
+import ChatbotCard from './ChatbotCard';
 
 import LoadingChartCard from '../../ui-component/cards/Skeleton/LoadingChartCard';
 import { gridSpacing } from '../../store/constant';
@@ -51,7 +56,7 @@ const Dashboard = () => {
       } else if(hour >= 17 && hour < 20) { // Evening
         gradientColors = ['#FFDAB9', '#E6E6FA'];
       } else { // Night
-        gradientColors = ['#E6E6FA', '#191970'];
+        gradientColors = ['#E6E6FA', '#9696e8'];
       }
 
       setGradient(`linear-gradient(to bottom, ${gradientColors[0]}, ${gradientColors[1]})`);
@@ -92,9 +97,9 @@ const Dashboard = () => {
         py: 5
     }}
     >
-      { 
+      {
         !isLoading &&
-        <MuiTypography variant="h2" gutterBottom sx={{ pb: 2.5 }}>
+        <MuiTypography variant="h1" gutterBottom sx={{ pb: 2.5, lineHeight: 1.3 }}>
         {hour >= 5 && hour < 12 ? 'Good Morning' :
          hour >= 12 && hour < 18 ? 'Good Afternoon' :
          'Good Evening'}
@@ -110,8 +115,28 @@ const Dashboard = () => {
         </Grid>
       </Grid>
       <Grid container spacing={gridSpacing} sx={{py: 2.5}}>
-        <Grid item xs={12} md={3}>
-          <AddMoodCard />
+        <Grid item xs={12} md={12}>
+          <Divider>
+            <Typography variant="h2">Explore MentalQuest</Typography>
+          </Divider>
+        </Grid>
+      </Grid>
+      <Grid container spacing={gridSpacing} sx={{py: 2.5}}>
+        <Grid item xs={12} md={6} sm={6} lg={4}>
+          <MoodLoggingCard isLoading={isLoading} />
+        </Grid>
+        <Grid item xs={12} md={6} sm={6} lg={4}>
+          <AssessmentCard isLoading={isLoading} />
+        </Grid>
+        <Grid item xs={12} md={12} sm={12} lg={4}>
+          <Grid container spacing={gridSpacing}>
+            <Grid item xs={12} md={6} sm={6} lg={12}>
+              <ExerciseCard isLoading={isLoading} />
+            </Grid>
+            <Grid item xs={12} md={6} sm={6} lg={12}>
+              <ChatbotCard isLoading={isLoading} />
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
     </Card>

@@ -10,7 +10,7 @@ const resource = {
     children: [
         {
             id: 'ai-chat',
-            title: 'Chatbot (Beta)',
+            title: 'Chatbot',
             type: 'item',
             url: '/chat',
             icon: icons.IconMessages,
@@ -20,7 +20,7 @@ const resource = {
             id: 'external',
             title: 'External Resources',
             type: 'item',
-            url: '/external-resources',
+            url: '/external',
             icon: icons.IconExternalLink,
             breadcrumbs: false
         }

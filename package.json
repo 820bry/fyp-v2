@@ -24,6 +24,7 @@
     "@reduxjs/toolkit": "^2.2.5",
     "@tabler/icons-react": "^3.6.0",
     "apexcharts": "^3.49.2",
+    "date-fns": "^3.6.0",
     "env-cmd": "^10.1.0",
     "firebase": "^10.12.2",
     "firestore": "^1.1.6",

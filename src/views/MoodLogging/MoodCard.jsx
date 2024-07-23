@@ -58,6 +58,10 @@ const MoodCard = ({ isLoading, scale, date, onClick }) => {
                 color: '#fff',
                 overflow: 'hidden',
                 position: 'relative',
+                '&>div': {
+                position: 'relative',
+                zIndex: 5
+                },
                 '&:after': {
                 content: '""',
                 position: 'absolute',
@@ -105,7 +109,7 @@ const MoodCard = ({ isLoading, scale, date, onClick }) => {
                         <Grid item>
                             <Grid container alignItems="center">
                                 <Grid item>
-                                    <Typography sx={{ fontSize: '1.5rem', fontWeight: 500, mr: 1, mt: 1.75, mb: 0.75 }}>
+                                    <Typography sx={{ fontSize: '2rem', fontWeight: 500, mr: 1, mt: 1.75, mb: 0.75 }}>
                                         {date}
                                     </Typography>
                                 </Grid>
@@ -114,7 +118,7 @@ const MoodCard = ({ isLoading, scale, date, onClick }) => {
                         <Grid item sx={{ mb: 1.25 }}>
                             <Typography
                             sx={{
-                                fontSize: '0.8rem',
+                                fontSize: '1.1rem',
                                 fontWeight: 500,
                                 color: 'primary.200'
                             }}

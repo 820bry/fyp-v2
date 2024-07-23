@@ -9,14 +9,14 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Typography from '@mui/material/Typography';
 
 import Chart from 'react-apexcharts';
-import { parse, format, subDays, } from 'date-fns';
+import { parse, format, startOfWeek, startOfMonth, getWeek, getYear } from 'date-fns';
 
 import MainCard from '../../ui-component/cards/MainCard';
 import { gridSpacing } from '../../store/constant';
 
 const MoodChart = ({ data }) => {
     const theme = useTheme();
-    const [view, setView] = useState('7days');
+    const [view, setView] = useState('daily');
 
     const handleViewChange = (event, newView) => {
         if (newView !== null) {
@@ -42,36 +42,42 @@ const MoodChart = ({ data }) => {
             parsedDate: parse(item.date, 'dd/MM/yyyy', new Date())
         }));
 
-        const today = new Date();
-        const filterDate = view === '7days' ? subDays(today, 6) : subDays(today, 29);
+        switch(view) {
+            case 'daily':
+                return parsedData.map(item => ({
+                    date: format(item.parsedDate, 'dd MMM yyyy'),
+                    scale: item.scale
+                }));
+            case 'weekly':
+                const weeklyData = {};
+                parsedData.forEach(item => {
+                    const week = `${getYear(item.parsedDate)}-W${getWeek(item.parsedDate)}`;
+                    if(!weeklyData[week]) {
+                        weeklyData[week] = { sum: 0, count: 0 };
+                    }
+                    weeklyData[week].sum += item.scale;
+                    weeklyData[week].count += 1;
+                });
+                return Object.entries(weeklyData).map(([week, { sum, count }]) => ({
+                    date: week,
+                    scale: sum / count
+                }));
+            case 'monthly':
+                const monthlyData = {};
+                parsedData.forEach(item => {
+                    const month = format(item.parsedDate, 'MMM yyyy');
 
-        // Set the filterDate to the start of the day
-        filterDate.setHours(0, 0, 0, 0);
-
-        const filteredData = parsedData.filter(item => {
-            // Set the item's date to the start of its day for comparison
-            const itemDate = new Date(item.parsedDate);
-            itemDate.setHours(0, 0, 0, 0);
-            return itemDate >= filterDate;
-        });
-
-        const allDates = [];
-        for(let d = filterDate; d <= today; d.setDate(d.getDate() + 1)) {
-            allDates.push(new Date(d));
+                    if(!monthlyData[month]) {
+                        monthlyData[month] = { sum: 0, count: 0 };
+                    }
+                    monthlyData[month].sum += item.scale;
+                    monthlyData[month].count += 1;
+                });
+                return Object.entries(monthlyData).map(([month, { sum, count }]) => ({
+                    date: month,
+                    scale: sum / count
+                }));
         }
-
-        return allDates.map(date => {
-            const matchingItem = filteredData.find(item => 
-                item.parsedDate.getDate() === date.getDate() &&
-                item.parsedDate.getMonth() === date.getMonth() &&
-                item.parsedDate.getFullYear() === date.getFullYear()
-            );
-            return {
-                date: format(date, 'dd MMM'),
-                scale: matchingItem ? matchingItem.scale : 0
-            };
-        });
-        
     }, [data, view]);
 
     const chartData = {
@@ -84,21 +90,12 @@ const MoodChart = ({ data }) => {
         options: {
             chart: {
                 id: 'line-chart',
-                width: '100%',
                 toolbar: {
                     show: false
                 },
                 zoom: {
                     enabled: false
-                },
-                responsive: [{
-                    breakpoint: 480,
-                    options: {
-                        chart: {
-                            width: '100%'
-                        }
-                    }
-                }]
+                }
             },
             dataLabels: {
                 enabled: false
@@ -116,11 +113,10 @@ const MoodChart = ({ data }) => {
             xaxis: {
                 categories: processedData.map(item => item.date),
                 labels: {
-                    rotateAlways: true,
                     rotate: -90,
-                },
-                tickAmount: 6
-              },
+                    rotateAlways: true
+                }
+            },
             yaxis: {
                 labels: {
                     show: false
@@ -142,7 +138,7 @@ const MoodChart = ({ data }) => {
                             case 5:
                                 return 'Very Pleasant';
                             default:
-                                return 'No data';
+                                return '';
                         }
                     }
                 }
@@ -156,10 +152,10 @@ const MoodChart = ({ data }) => {
                 <Grid item xs={12}>
                     <Grid container alignItems="center" justifyContent="space-between">
                         <Grid item>
-                            <Typography variant="h3" sx={{ py: '7.7px' }}>Your mood trends</Typography>
+                            <Typography variant="h3" sx={{ py: '7.7px' }}>Your mood trend</Typography>
                         </Grid>
                         {
-                            processedData.length !== 0 &&
+                            data.length !== 0 &&
                             <Grid item>
                                 <ToggleButtonGroup
                                     value={view}
@@ -167,11 +163,14 @@ const MoodChart = ({ data }) => {
                                     onChange={handleViewChange}
                                     aria-label="view toggle"
                                 >
-                                    <ToggleButton value="7days" size="small" aria-label="7 days" disableRipple>
-                                        Last 7 days
+                                    <ToggleButton value="daily" size="small" aria-label="daily view" disableRipple>
+                                        Daily
                                     </ToggleButton>
-                                    <ToggleButton value="30days" size="small" aria-label="3 days" disableRipple> 
-                                        Last 30 days
+                                    <ToggleButton value="weekly" size="small" aria-label="weekly view" disableRipple> 
+                                        Weekly
+                                    </ToggleButton>
+                                    <ToggleButton value="monthly" size="small" aria-label="monthly view" disableRipple>
+                                        Monthly
                                     </ToggleButton>
                                 </ToggleButtonGroup>
                             </Grid>
@@ -181,7 +180,7 @@ const MoodChart = ({ data }) => {
                 <Grid item xs={12}>
                     {
                         // check whether user has any data logged
-                        processedData.length === 0 ? 
+                        data.length === 0 ? 
                         <Typography>No mood logging entries found yet. Start logging to see analysis!</Typography> 
                         : 
                         <Chart {...chartData} />

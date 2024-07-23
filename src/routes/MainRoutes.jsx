@@ -16,6 +16,9 @@ const Summary = Loadable(lazy(() => import('../views/Assessment/Summary')));
 // exercise routing
 const Exercise = Loadable(lazy(() => import('../views/Exercise')));
 
+// chatbot routing
+const Chatbot = Loadable(lazy(() => import('../views/chatbot')));
+
 // utilities routing
 const UtilsTypography = Loadable(lazy(() => import('../views/utilities/Typography')));
 const UtilsColor = Loadable(lazy(() => import('../views/utilities/Color')));
@@ -67,6 +70,10 @@ const MainRoutes = {
     {
       path: 'exercise',
       element: <Exercise />
+    },
+    {
+      path: 'chat',
+      element: <Chatbot />
     },
     {
       path: 'utils',
