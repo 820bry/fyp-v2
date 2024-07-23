@@ -9,8 +9,8 @@ const resource = {
     type: 'group',
     children: [
         {
-            id: 'ai-chat',
-            title: 'Chatbot',
+            id: 'chat',
+            title: 'Project Aura',
             type: 'item',
             url: '/chat',
             icon: icons.IconMessages,

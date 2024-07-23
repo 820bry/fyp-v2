@@ -11,7 +11,7 @@ const home = {
   type: 'group',
   children: [
     {
-      id: 'default',
+      id: 'home',
       title: 'Home',
       type: 'item',
       url: '/home',

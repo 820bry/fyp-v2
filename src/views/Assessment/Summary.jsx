@@ -66,13 +66,13 @@ const Summary = () => {
                 </Grid>
                 <Grid item xs={12} sx={{m: 2}}>
                     <Box sx={{color: 'inherit'}}>
-                        <Typography variant="h1">Results Breakdown:</Typography>
+                        <Typography variant="h2">Results Breakdown:</Typography>
                     </Box>
                 </Grid>
                 <Grid item lg={6} md={6} sm={6} xs={12}>
                     <Box sx={{px: '10%'}}>
                         <Box sx={{color: 'inherit'}}>
-                                <Typography variant="h2">Depression Risk</Typography>
+                                <Typography variant="h3">Depression Risk</Typography>
                         </Box>
                         <Box sx={{ py: 8 }}>
                             <Scale value={phq9total} max='27'/>
@@ -96,7 +96,7 @@ const Summary = () => {
                 <Grid item lg={6} md={6} sm={6} xs={12}>
                     <Box sx={{px: '10%'}}>
                         <Box sx={{color: 'inherit'}}>
-                                <Typography variant="h2">Anxiety Risk</Typography>
+                                <Typography variant="h3">Anxiety Risk</Typography>
                         </Box>
                         <Box sx={{ py: 8 }}>
                             <Scale value={gad7total} max='21'/>
