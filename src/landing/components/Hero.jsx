@@ -8,6 +8,8 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
 
+import AppImage from '../../assets/app.png';
+
 const Hero = ({ isLoading, isAuthed }) => {
     const navigate = useNavigate();
 
@@ -85,7 +87,7 @@ const Hero = ({ isLoading, isAuthed }) => {
                         alignSelf: 'center',
                         height: { xs: 200, sm: 700 },
                         width: '100%',
-                        backgroundImage: 'url("/src/assets/app.png")',
+                        backgroundImage: `url(${AppImage})`,
                         backgroundSize: 'cover',
                         borderRadius: '10px',
                         outline: '1px solid',

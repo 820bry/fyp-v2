@@ -1,39 +1,40 @@
 import * as React from 'react';
 
-import { alpha } from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import Chip from '@mui/material/Chip';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
-import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 
 import BookIcon from '@mui/icons-material/Book';
 import AirIcon from '@mui/icons-material/Air';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
+
+import AnalysisImg from '../../assets/landing/analysis.png';
+import BreathingImg from '../../assets/landing/breathing.png';
+import ChatbotImg from '../../assets/landing/chatbot.png';
 
 const items = [
     {
         icon: <BookIcon />,
         title: 'Mood Analysis',
         description: 'MentalQuest provides basic analysis of your mood and emotions so you can better understand trends in how you feel.',
-        image: 'url("/src/assets/landing/analysis.png")'
+        image: `url(${AnalysisImg})`
     },
     {
         icon: <AirIcon />,
         title: 'Mental Health Exercises',
         description: 'Exercises such as breathing can help with calming yourself and relaxing your mind.',
-        image: 'url("/src/assets/landing/breathing.png")'
+        image: `url(${BreathingImg})`
     },
     {
         icon: <ChatBubbleIcon />,
         title: 'Chatbot',
         description: 'Not sure what kind of help you need? Our chatbot can help identify your issue and provide relevant resources.',
-        image: 'url("/src/assets/landing/chatbot.png")'
+        image: `url(${ChatbotImg})`
     }
 ];
 
