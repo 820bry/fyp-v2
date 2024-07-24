@@ -11,7 +11,7 @@ const about = {
             id: 'about',
             title: 'About MentalQuest',
             type: 'item',
-            url: '/landing',
+            url: '/',
             icon: icons.IconInfoCircle,
             breadcrumbs: false
         }
