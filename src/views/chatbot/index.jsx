@@ -5,6 +5,7 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import Card from '@mui/material/Card';
 import Container from '@mui/material/Container';
+import Link from '@mui/material/Link';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
@@ -17,6 +18,8 @@ import { Typography } from '@mui/material';
 
 import PerfectScrollbar from 'react-perfect-scrollbar';
 
+import generateResponse from './MessageProcessing';
+
 const MessageList = styled(List)({
     height: '60vh',
     padding: '20px'
@@ -28,7 +31,7 @@ const MessageItem = styled(ListItem)(({ theme, sender }) => ({
 }));
 
 const MessageContent = styled(Paper)(({ theme, sender }) => ({
-    padding: '10px 15px',
+    padding: '8px 13px',
     maxWidth: '70%',
     backgroundColor: sender === 'user' ? theme.palette.secondary.light : theme.palette.grey[200],
     color: sender === 'user' ? theme.palette.secondary.contrastText : theme.palette.text.primary
@@ -38,6 +41,7 @@ const MessageContent = styled(Paper)(({ theme, sender }) => ({
 const Chatbot = () => {
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState('');
+
     const messagesEndRef = useRef(null);
     const scrollbarRef = useRef(null);
 
@@ -47,13 +51,47 @@ const Chatbot = () => {
 
     useEffect(scrollToBottom, [messages]);
 
+    // useEffect(() => {
+
+    //     const firstMsg = { text: 'xdd', sender: 'bot' };
+    //     setMessages(prevMessages => [...prevMessages, firstMsg]);
+    // }, []);
+
     const handleSend = async () => {
         if(input.trim() === '') return;
 
         const userMessage = { text: input, sender: 'user' };
         setMessages(prevMessages => [...prevMessages, userMessage]);
+        setInput(''); // reset text box
 
-        setInput('');
+        const botResponse = generateResponse(input);
+        console.log(botResponse);
+        setMessages(prevMessages => [...prevMessages, {text: botResponse.text, sender: 'bot'}]);
+
+    }
+
+    const renderMessage = (message) => {
+        if(message.sender === 'user') {
+            return <Typography variant="body1" sx={{ fontSize: '12px' }}>{message.text}</Typography>
+        } else {
+            const parts = message.text.split('\n\n');
+            return (
+                <>
+                <Typography variant="body1" sx={{ fontSize: '12px' }}>{parts[0]}</Typography>
+                {parts[1] && <Typography variant="body1" sx={{ fontSize: '12px', mt: 1, fontWeight: 'bold' }}>{parts[1]}</Typography>}
+                {parts[2] && (
+                    <Box sx={{ mt: 1 }}>
+                    <Typography variant="body2" sx={{ fontSize: '12px' }}>{parts[2].split('\n')[0]}</Typography>
+                    {parts[2].split('\n').slice(1).map((resource, index, array) => (
+                        <Link key={index} href={resource.split(': ')[1]} target="_blank" rel="noopener noreferrer" sx={{ fontSize: '12px' }}>
+                            {resource.split(': ')[0]} {index < array.length - 1 && <br />}
+                        </Link>
+                    ))}
+                    </Box>
+                )}
+                </>
+            );
+        }
     }
 
     return (
@@ -63,8 +101,9 @@ const Chatbot = () => {
             boxShadow: 6,
             bgcolor: 'grey.100',
             color: 'black',
-            px: 0.5,
-            py: 2,
+            px: 0.1,
+            pt: 2,
+            pb: 1.5
         }}
         >
             <Container maxWidth="sm">
@@ -79,10 +118,14 @@ const Chatbot = () => {
                             style={{ width: '100%'}}
                         >
                             <MessageList>
+                                <Typography variant="h6" align="center" sx={{ color: "lightgrey", pb: 3 }}>
+                                    MentalQuest does not store message data between you and Project Aura. Therefore, each chat session is unique and cannot be carried forward to future sessions.
+                                </Typography>
+                                
                                 {messages.map((message, index) => (
                                     <MessageItem key={index} sender={message.sender}>
                                         <MessageContent sender={message.sender}>
-                                            <Typography variant="body1">{message.text}</Typography>
+                                            {renderMessage(message)}
                                         </MessageContent>
                                     </MessageItem>
                                 ))}
@@ -92,6 +135,7 @@ const Chatbot = () => {
                     </Paper>
                     <Box sx={{ display: 'flex', gap: 1 }}>
                         <TextField
+                            autoComplete='off'
                             fullWidth
                             variant="outlined"
                             placeholder="Type your message..."
@@ -108,7 +152,7 @@ const Chatbot = () => {
                     </Box>
                     <Box sx={{ pt: 1.5, display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                         <Typography variant="h6" align='center' sx={{ color: 'grey', lineHeight: 1.2 }}>
-                            To protect your privacy, this prototype of Project Aura does not store your messages, nor does it have access to your data.
+                            To protect your privacy, this prototype of Project Aura does not have access to your data.
                         </Typography>
                     </Box>
                 </Box>

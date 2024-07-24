@@ -26,6 +26,7 @@
     "@tabler/icons-react": "^3.6.0",
     "apexcharts": "^3.49.2",
     "compromise": "^14.13.0",
+    "compromise-sentences": "^0.3.0",
     "date-fns": "^3.6.0",
     "env-cmd": "^10.1.0",
     "firebase": "^10.12.2",

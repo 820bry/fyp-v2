@@ -32,14 +32,21 @@ Mental Assessment
 
 Breathing Exercise
 
-- Add 'Tap to Start' on the circle itself
+- ~~Add 'Tap to Start' on the circle itself~~
 - (if got time) Add audio feedback / particle effects
 
-Landing Page
+External Resources
+- Find resources
 
+Landing Page
 - Basic info (about us and features)
 - Direct link for external resources
 - Login and sign up
+
+Profile Settings
+- Edit First and Last Name
+- Multiavatar icon
+- Randomize profile icon (with key)
 
 ## Issues
 
