@@ -10,6 +10,7 @@ import Typography from '@mui/material/Typography';
 import MenuItem from '@mui/material/MenuItem';
 import Drawer from '@mui/material/Drawer';
 import MenuIcon from '@mui/icons-material/Menu';
+import CircularProgress from '@mui/material/CircularProgress';
 
 import appLogo from '../../assets/icon.png';
 
@@ -19,7 +20,8 @@ const logoStyle = {
     cursor: 'pointer'
 }
 
-const Header = () => {
+const Header = ({ isLoading, isAuthed }) => {
+
     const [open, setOpen] = useState(false);
 
     const toggleDrawer = (newOpen) => () => {
@@ -81,11 +83,31 @@ const Header = () => {
 
                             <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                                 <MenuItem
+                                    onClick={() => scrollToSection('highlights')}
+                                    sx={{ borderRadius: '99px', py: '6px', px: '12px'}}
+                                >
+                                    <Typography variant="body2" color="text.primary">
+                                        Highlights
+                                    </Typography>
+                                </MenuItem>
+                            </Box>
+                            <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+                                <MenuItem
                                     onClick={() => scrollToSection('features')}
-                                    sx={{ py: '6px', px: '12px'}}
+                                    sx={{ borderRadius: '99px', py: '6px', px: '12px'}}
                                 >
                                     <Typography variant="body2" color="text.primary">
                                         Features
+                                    </Typography>
+                                </MenuItem>
+                            </Box>
+                            <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+                                <MenuItem
+                                    onClick={() => scrollToSection('faq')}
+                                    sx={{ borderRadius: '99px', py: '6px', px: '12px'}}
+                                >
+                                    <Typography variant="body2" color="text.primary">
+                                        FAQ
                                     </Typography>
                                 </MenuItem>
                             </Box>
@@ -98,24 +120,43 @@ const Header = () => {
                                 alignItems: 'center',
                             }}
                         >
-                            <Button
-                                color="primary"
-                                variant="text"
-                                size="small"
-                                component="a"
-                                href="/login"
-                            >
-                                Login
-                            </Button>
-                            <Button
-                                color="primary"
-                                variant="contained"
-                                size="small"
-                                component="a"
-                                href="/register"
-                            >
-                                Sign Up
-                            </Button>
+                            {
+                                isLoading ?
+                                <CircularProgress />
+                                :
+                                isAuthed ?
+                                <Button
+                                    color="secondary"
+                                    variant="contained"
+                                    size="small"
+                                    component="a"
+                                    href="/home"
+                                >
+                                    Open App
+                                </Button>
+                                :
+                                <>
+                                <Button
+                                    color="secondary"
+                                    variant="text"
+                                    size="small"
+                                    component="a"
+                                    href="/login"
+                                >
+                                    Login
+                                </Button>
+                                <Button
+                                    color="secondary"
+                                    variant="contained"
+                                    size="small"
+                                    component="a"
+                                    href="/register"
+                                >
+                                    Sign Up
+                                </Button>
+                                </>
+                            }
+                            
                         </Box>
                         <Box sx={{ display: { sm: '', md: 'none' } }}>
                             <Button
@@ -139,34 +180,64 @@ const Header = () => {
 
                                     {/* Navbar Items here (for nav drawer on mobile) */}
 
+                                    <MenuItem onClick={() => scrollToSection('highlights')}>
+                                        Highlights
+                                    </MenuItem>
+
                                     <MenuItem onClick={() => scrollToSection('features')}>
                                         Features
                                     </MenuItem>
 
+                                    <MenuItem onClick={() => scrollToSection('faq')}>
+                                        FAQ
+                                    </MenuItem>
+
                                     <Divider />
 
-                                    <MenuItem>
-                                        <Button
-                                            color="primary"
-                                            variant="contained"
-                                            component="a"
-                                            href="/register"
-                                            sx={{ width: '100%' }}
-                                        >
-                                            Sign Up
-                                        </Button>
-                                    </MenuItem>
-                                    <MenuItem>
-                                        <Button
-                                            color="primary"
-                                            variant="outlined"
-                                            component="a"
-                                            href="/login"
-                                            sx={{ width: '100% '}}
-                                        >
-                                            Login
-                                        </Button>
-                                    </MenuItem>
+                                    {
+                                        isLoading ?
+                                        <CircularProgress />
+                                        :
+                                        isAuthed ?
+                                        <MenuItem>
+                                            <Button
+                                                color="secondary"
+                                                variant="contained"
+                                                component="a"
+                                                href="/home"
+                                                sx={{ width: '100%' }}
+                                            >
+                                                Open App
+                                            </Button>
+                                        </MenuItem>
+                                        :
+                                        <>
+                                        <MenuItem>
+                                            <Button
+                                                color="secondary"
+                                                variant="contained"
+                                                component="a"
+                                                href="/login"
+                                                sx={{ width: '100%' }}
+                                            >
+                                                Login
+                                            </Button>
+                                        </MenuItem>
+                                        <MenuItem>
+                                            <Button
+                                                color="secondary"
+                                                variant="outlined"
+                                                component="a"
+                                                href="/register"
+                                                sx={{ width: '100% '}}
+                                            >
+                                                Sign Up
+                                            </Button>
+                                        </MenuItem>
+                                        </>
+                                    }
+
+                                    
                                 </Box>
                             </Drawer>
                         </Box>

@@ -4,7 +4,7 @@ const ExternalRoutes = {
     path: '/',
     children: [
         {
-            path: '/landing',
+            path: '/',
             element: <Landing />
         }
     ]
