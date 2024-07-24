@@ -128,7 +128,7 @@ const ProfileSection = () => {
         updateDoc(doc(usersRef, uid), {
             iconKey: newKey
         });
-
+        setIconKey(newKey);
       } catch(e) {
         console.log(e);
       }
