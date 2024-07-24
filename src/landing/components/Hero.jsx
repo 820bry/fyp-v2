@@ -62,7 +62,9 @@ const Hero = ({ isLoading, isAuthed }) => {
                     >
                         {
                             isLoading ?
-                            <CircularProgress />
+                            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                                <CircularProgress alignSelf="center"/>
+                            </Box>
                             :
                             isAuthed ?
                             <Button variant="contained" color="secondary" component="a" href="/home">
