@@ -10,11 +10,11 @@ const DashboardDefault = Loadable(lazy(() => import('../views/dashboard')));
 // logging routing
 const MoodLogging = Loadable(lazy(() => import('../views/mood-logging')));
 const AddEntry = Loadable(lazy(() => import("../views/mood-logging/AddEntry")));
-const Assessment = Loadable(lazy(() => import("../views/assessmen")));
-const Summary = Loadable(lazy(() => import('../views/assessmen/Summary')));
+const Assessment = Loadable(lazy(() => import("../views/assessment")));
+const Summary = Loadable(lazy(() => import('../views/assessment/Summary')));
 
 // exercise routing
-const Exercise = Loadable(lazy(() => import('../views/exercis')));
+const Exercise = Loadable(lazy(() => import('../views/exercise')));
 
 // resources routing
 const Chatbot = Loadable(lazy(() => import('../views/chatbot')));
