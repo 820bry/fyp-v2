@@ -1,6 +1,6 @@
 export const resources = {
     anxiety: [
-        { name: "Calm Breathing Exercise", link: "https://example.com/calm-breathing" },
+        { name: "Progressive Muscle Relaxation", link: "https://www.anxietycanada.com/articles/how-to-do-progressive-muscle-relaxation/" },
         { name: "Anxiety Self-Help Guide", link: "https://example.com/anxiety-guide" },
         { name: "Mindfulness Meditation App", link: "https://example.com/mindfulness-app" }
     ],

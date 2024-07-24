@@ -4,22 +4,16 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { doc, collection, getDoc, getDocs } from 'firebase/firestore';
 
 // material-ui
-import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
 import MuiTypography from '@mui/material/Typography';
 
 // project imports
-import PopularCard from './PopularCard';
-import TotalOrderLineChartCard from './TotalOrderLineChartCard';
-import TotalIncomeDarkCard from './TotalIncomeDarkCard';
-import TotalIncomeLightCard from './TotalIncomeLightCard';
-import TotalGrowthBarChart from './TotalGrowthBarChart';
 import ImpactChart from './ImpactChart';
 import MoodChart from './MoodChart';
 
-import MainCard from '../../ui-component/cards/MainCard';
 import MoodLoggingCard from './MoodLoggingCard';
 import AssessmentCard from './AssessmentCard';
 import ExerciseCard from './ExerciseCard';
@@ -30,10 +24,6 @@ import { gridSpacing } from '../../store/constant';
 import { auth, firestore } from '../../firebase';
 import { analyzeMoodData } from './data/data';
 
-// assets
-import StorefrontTwoToneIcon from '@mui/icons-material/StorefrontTwoTone';
-import Typography from '@mui/material/Typography';
-import { Skeleton } from '@mui/material';
 
 const Dashboard = () => {
   const [analysis, setAnalysis] = useState(null);

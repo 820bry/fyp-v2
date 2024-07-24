@@ -3,9 +3,10 @@ import { createBrowserRouter } from 'react-router-dom';
 // routes
 import MainRoutes from './MainRoutes';
 import LoginRoutes from './AuthenticationRoutes';
+import ExternalRoutes from './ExternalRoutes';
 
 // ==============================|| ROUTING RENDER ||============================== //
-const router = createBrowserRouter([MainRoutes, LoginRoutes], {
+const router = createBrowserRouter([MainRoutes, LoginRoutes, ExternalRoutes], {
   basename: import.meta.env.VITE_APP_BASE_NAME
 });
 
