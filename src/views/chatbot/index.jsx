@@ -18,7 +18,8 @@ import { Typography } from '@mui/material';
 
 import PerfectScrollbar from 'react-perfect-scrollbar';
 
-import generateResponse from './MessageProcessing';
+//import generateResponse from './MessageProcessing';
+import { initializeModel, generateResponse } from './gemini';
 
 const MessageList = styled(List)({
     height: '60vh',
@@ -41,6 +42,7 @@ const MessageContent = styled(Paper)(({ theme, sender }) => ({
 const Chatbot = () => {
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
     const messagesEndRef = useRef(null);
     const scrollbarRef = useRef(null);
@@ -51,23 +53,29 @@ const Chatbot = () => {
 
     useEffect(scrollToBottom, [messages]);
 
-    // useEffect(() => {
-
-    //     const firstMsg = { text: 'xdd', sender: 'bot' };
-    //     setMessages(prevMessages => [...prevMessages, firstMsg]);
-    // }, []);
+    useEffect(() => {
+        initializeModel();
+    }, []);
 
     const handleSend = async () => {
         if(input.trim() === '') return;
 
         const userMessage = { text: input, sender: 'user' };
-        setMessages(prevMessages => [...prevMessages, userMessage]);
+        setMessages([...messages, userMessage]);
         setInput(''); // reset text box
+        setIsLoading(true);
 
-        const botResponse = generateResponse(input);
-        console.log(botResponse);
-        setMessages(prevMessages => [...prevMessages, {text: botResponse.text, sender: 'bot'}]);
-
+        try {
+            const response = await generateResponse(input);
+            const botMessage = { text: response, sender: 'bot' };
+            setMessages(prevMessages => [...prevMessages, botMessage]);
+        } catch(error) {
+            console.error('Error:', error);
+            const errMessage = { text: 'Sorry, I encountered an error. Please try again later.', sender: 'bot' };
+            setMessages(prevMessages => [...prevMessages, errMessage]);
+        } finally {
+            setIsLoading(false);
+        }
     }
 
     const renderMessage = (message) => {
@@ -109,7 +117,7 @@ const Chatbot = () => {
             <Container maxWidth="sm">
                 <Box sx={{ height: '80vh', display: 'flex', flexDirection: 'column' }}>
                     <Typography variant="h5" gutterBottom>
-                        Chat with Project Aura
+                        Chat with Quest
                     </Typography>
                     <Paper elevation={3} sx={{ flexGrow: 1, mb: 2, display: 'flex', flexDirection: 'column' }}>
                         <PerfectScrollbar
@@ -119,16 +127,17 @@ const Chatbot = () => {
                         >
                             <MessageList>
                                 <Typography variant="h6" align="center" sx={{ color: "lightgrey", pb: 3 }}>
-                                    MentalQuest does not store message data between you and Project Aura. Therefore, each chat session is unique and cannot be carried forward to future sessions.
+                                    Quest does not store message data. Therefore, each chat session is unique and cannot be carried forward to future sessions.
                                 </Typography>
                                 
                                 {messages.map((message, index) => (
                                     <MessageItem key={index} sender={message.sender}>
                                         <MessageContent sender={message.sender}>
-                                            {renderMessage(message)}
+                                            <Typography variant="body1" sx={{ fontSize: '12px' }}>{message.text}</Typography>
                                         </MessageContent>
                                     </MessageItem>
                                 ))}
+                                {isLoading && <Typography variant="body1" sx={{ fontSize: '12px' }}>Bot is typing...</Typography>}
                                 <div ref={messagesEndRef} />
                             </MessageList>
                         </PerfectScrollbar>
@@ -152,7 +161,7 @@ const Chatbot = () => {
                     </Box>
                     <Box sx={{ pt: 1.5, display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                         <Typography variant="h6" align='center' sx={{ color: 'grey', lineHeight: 1.2 }}>
-                            To protect your privacy, this prototype of Project Aura does not have access to your data.
+                            To protect your privacy, this prototype does not have access to your data.
                         </Typography>
                     </Box>
                 </Box>

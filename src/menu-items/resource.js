@@ -10,7 +10,7 @@ const resource = {
     children: [
         {
             id: 'chat',
-            title: 'Project Aura',
+            title: 'Chatbot',
             type: 'item',
             url: '/chat',
             icon: icons.IconMessages,

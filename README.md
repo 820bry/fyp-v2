@@ -36,17 +36,30 @@ Breathing Exercise
 - (if got time) Add audio feedback / particle effects
 
 External Resources
+
 - Find resources
 
 Landing Page
+
 - Basic info (about us and features)
 - Direct link for external resources
 - Login and sign up
 
 Profile Settings
+
 - Edit First and Last Name
 - Multiavatar icon
-- Randomize profile icon (with key)
+- Randomize profile icon (with key) (kinda wonky now)
+
+Login and Register Page
+
+- Implement proper error messages when logging in (e.g. invalid credentials, wrong password etc.)
+- Register page doesn't display any error message or circular loading progress now (can refer from login page)
+- Implement session tracking to redirect users to dashboard if already logged in
+
+Chatbot
+
+- pls rename the bot (CRINGE)
 
 ## Issues
 

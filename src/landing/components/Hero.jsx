@@ -75,7 +75,7 @@ const Hero = ({ isLoading, isAuthed }) => {
                             <Button variant="contained" color="secondary" component="a" href="/login">
                                 Login to MentalQuest
                             </Button>
-                            <Button variant="text" color="secondary" component="a" href="/login">
+                            <Button variant="text" color="secondary" component="a" href="/register">
                                 Sign up for a new account
                             </Button>
                             </>
