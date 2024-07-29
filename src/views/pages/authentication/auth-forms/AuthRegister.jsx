@@ -11,6 +11,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
+import Chip from '@mui/material/Chip';
 import Divider from '@mui/material/Divider';
 import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -22,6 +23,7 @@ import InputLabel from '@mui/material/InputLabel';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import CircularProgress from '@mui/material/CircularProgress';
 
 // third party
 import * as Yup from 'yup';
@@ -50,6 +52,24 @@ const AuthRegister = ({ ...others }) => {
   const [strength, setStrength] = useState(0);
   const [level, setLevel] = useState();
 
+  const [status, setStatus] = useState();
+  const [error, setError] = useState('');
+
+  function renderComponent(errMsg = '') {
+    switch(status) {
+      case 'loading':
+        return <CircularProgress />
+      case 'error':
+        return (
+          <Chip
+            label={errMsg}
+            variant="outlined"
+            color="error"
+          />
+        )
+    }
+  }
+
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -59,6 +79,8 @@ const AuthRegister = ({ ...others }) => {
   };
 
   const handleSubmit = (event) => {
+    setStatus('loading');
+
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
@@ -81,6 +103,8 @@ const AuthRegister = ({ ...others }) => {
       })
       .catch((error) => {
         console.error("Register error: " + error.code + " : " + error.message);
+        setError(error.code);
+        setStatus('error');
       });
   }
 
@@ -103,6 +127,7 @@ const AuthRegister = ({ ...others }) => {
           </Box>
         </Grid>
         <Grid item xs={12} container alignItems="center" justifyContent="center">
+          {renderComponent(error)}
         </Grid>
       </Grid>
 
@@ -129,6 +154,7 @@ const AuthRegister = ({ ...others }) => {
                   type="text"
                   defaultValue=""
                   sx={{ ...theme.typography.customInput }}
+                  required
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -140,6 +166,7 @@ const AuthRegister = ({ ...others }) => {
                   type="text"
                   defaultValue=""
                   sx={{ ...theme.typography.customInput }}
+                  required
                 />
               </Grid>
             </Grid>
@@ -153,6 +180,7 @@ const AuthRegister = ({ ...others }) => {
                 onBlur={handleBlur}
                 onChange={handleChange}
                 inputProps={{}}
+                required
               />
               {touched.email && errors.email && (
                 <FormHelperText error id="standard-weight-helper-text--register">

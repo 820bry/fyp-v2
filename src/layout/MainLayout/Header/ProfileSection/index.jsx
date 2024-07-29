@@ -23,12 +23,14 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import Grid from '@mui/material/Grid';
-import IconButton from '@mui/material/IconButton'
+import IconButton from '@mui/material/IconButton';
+import TextField from '@mui/material/TextField';
+import CircularProgress from '@mui/material/CircularProgress';
 
 // project imports
+import AnimateButton from '../../../../ui-component/extended/AnimateButton';
 import MainCard from '../../../../ui-component/cards/MainCard';
 import Transitions from '../../../../ui-component/extended/Transitions';
-import User1 from '../../../../assets/images/users/user-round.svg';
 import { auth, firestore } from '../../../../firebase';
 import { gridSpacing } from '../../../../store/constant';
 import { generateKey } from '../../../../utils/keygenerator';
@@ -50,6 +52,10 @@ const ProfileSection = () => {
     const [uid, setUid] = useState('');
     const [iconKey, setIconKey] = useState('');
 
+    const [newValues, setNewValues] = useState([]);
+    const [error, setError] = useState(false);
+    const [isUpdating, setIsUpdating] = useState(false);
+
     useEffect(() => {
       onAuthStateChanged(auth, async (user) => {
         setUid(user.uid);
@@ -60,6 +66,8 @@ const ProfileSection = () => {
           if (docSnap.exists()) {
             setFirstName(docSnap.data().firstName);
             setLastName(docSnap.data().lastName);
+
+            setNewValues([docSnap.data().firstName, docSnap.data().lastName]);
 
             // check if user has icon key
             if(docSnap.data().iconKey) {
@@ -75,7 +83,7 @@ const ProfileSection = () => {
           console.error("error retrieving user info: " + e);
         }
       });
-    }), [];
+    }, []);
 
     /**
      * anchorRef is used on different componets and specifying one type leads to other components throwing an error
@@ -131,6 +139,42 @@ const ProfileSection = () => {
         setIconKey(newKey);
       } catch(e) {
         console.log(e);
+      }
+    }
+
+    const handleChange = (index) => (event) => {
+      const values = [...newValues];
+      values[index] = event.target.value;
+
+      setNewValues(values);
+      console.log(values);
+      console.log(newValues);
+
+    }
+
+
+    const handleUpdate = async () => {
+      setError(false);
+      // console.log(newValues);
+      if(newValues.some(value => value.trim() === '')) {
+        setError(true);
+      } else {
+        setIsUpdating(true);
+        try {
+          const usersRef = collection(firestore, "users");
+          await updateDoc(doc(usersRef, uid), {
+            firstName: newValues[0],
+            lastName: newValues[1]
+          });
+          
+        } catch(e) {
+          console.error('error updating username');
+        } finally {
+          setModalOpen(false);
+          setIsUpdating(false);
+          setFirstName(newValues[0]);
+          setLastName(newValues[1]);
+        }
       }
     }
 
@@ -203,7 +247,48 @@ const ProfileSection = () => {
                 </Grid>
 
                 <Grid item lg={6} md={6} sm={6} xs={12}>
-                  xd
+                  <Typography variant="h3" sx={{mb: 2}}>Update Profile</Typography>
+                  <Grid item xs={12} sm={9}>
+                    <TextField
+                      fullWidth
+                      label="First Name"
+                      margin="normal"
+                      name="fname"
+                      type="text"
+                      defaultValue={firstName}
+                      onChange={handleChange(0)}
+                      sx={{ ...theme.typography.customInput }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={9}>
+                    <TextField
+                      fullWidth
+                      label="Last Name"
+                      margin="normal"
+                      name="lname"
+                      type="text"
+                      defaultValue={lastName}
+                      onChange={handleChange(1)}
+                      sx={{ ...theme.typography.customInput }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={9}>
+                    <Box sx={{ my: 2, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                      {error && <Chip label="Please fill out both fields!" variant="outlined" color="error" />}
+                    </Box>
+                    <Box sx={{ my: 2, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                      <AnimateButton>
+                        {
+                          !isUpdating ?
+                          <Button disableElevation fullWidth size="large" variant="contained" color="secondary" onClick={() => handleUpdate()}>
+                            Update
+                          </Button>
+                          :
+                          <CircularProgress />
+                        }
+                      </AnimateButton>
+                    </Box>
+                  </Grid>
                 </Grid>
               </Grid>
             </Grid>
