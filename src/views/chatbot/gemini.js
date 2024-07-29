@@ -14,7 +14,11 @@ export const generateResponse = async (input) => {
         throw new Error("GenAI model not initialized");
     }
 
-    const prompt = `You are now a helpful mental health chatbot. Respond to the following in a supportive and informative manner, and provide any relevant resources and intervention techniques whenever necessary: ${input}`;
+    const prompt = `
+    You are now a helpful mental health chatbot.
+    Respond to the following in a supportive and informative manner, and provide any relevant resources and intervention techniques whenever necessary.
+    Input: ${input}
+    `;
     const result = await model.generateContent(prompt);
     const response = await result.response;
 

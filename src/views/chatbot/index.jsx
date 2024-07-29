@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -31,7 +31,7 @@ const MessageItem = styled(ListItem)(({ theme, sender }) => ({
     padding: '5px 0'
 }));
 
-const MessageContent = styled(Paper)(({ theme, sender }) => ({
+const MessageContentStyle = styled(Paper)(({ theme, sender }) => ({
     padding: '8px 13px',
     maxWidth: '70%',
     backgroundColor: sender === 'user' ? theme.palette.secondary.light : theme.palette.grey[200],
@@ -78,28 +78,38 @@ const Chatbot = () => {
         }
     }
 
-    const renderMessage = (message) => {
-        if(message.sender === 'user') {
-            return <Typography variant="body1" sx={{ fontSize: '12px' }}>{message.text}</Typography>
-        } else {
-            const parts = message.text.split('\n\n');
-            return (
-                <>
-                <Typography variant="body1" sx={{ fontSize: '12px' }}>{parts[0]}</Typography>
-                {parts[1] && <Typography variant="body1" sx={{ fontSize: '12px', mt: 1, fontWeight: 'bold' }}>{parts[1]}</Typography>}
-                {parts[2] && (
-                    <Box sx={{ mt: 1 }}>
-                    <Typography variant="body2" sx={{ fontSize: '12px' }}>{parts[2].split('\n')[0]}</Typography>
-                    {parts[2].split('\n').slice(1).map((resource, index, array) => (
-                        <Link key={index} href={resource.split(': ')[1]} target="_blank" rel="noopener noreferrer" sx={{ fontSize: '12px' }}>
-                            {resource.split(': ')[0]} {index < array.length - 1 && <br />}
-                        </Link>
-                    ))}
-                    </Box>
-                )}
-                </>
+    const MessageContent = ({ sender, children }) => {
+        const convertUrlsToLinks = (text) => {
+            const urlRegex = /(https?:\/\/[^\s]+)/g;
+            return text.split(urlRegex).map((part, index) => 
+                urlRegex.test(part) ? (
+                <Link key={index} href={part} target="_blank" rel="noopener noreferrer" sx={{ fontSize: '12px', wordBreak: 'break-all' }}>
+                    {part}
+                </Link>
+                ) : part
             );
         }
+
+        const renderMsgContent = (text) => {
+            const paragraphs = text.split(/\n\s*\n/g);
+        
+            return paragraphs.map((paragraph, index) => (
+                <React.Fragment key={index}>
+                    {convertUrlsToLinks(paragraph.trim())}
+                    {index < paragraphs.length - 1 && <br />}
+                </React.Fragment>
+            ));
+        }
+
+        return (
+            <>
+            <MessageContentStyle sender={sender}>
+                <Typography variant="body1" component="div" sx={{fontSize: '12px', whiteSpace: 'pre-wrap', wordBreak: 'break-word'}}>
+                    {renderMsgContent(children)}
+                </Typography>
+            </MessageContentStyle>
+            </>
+        );
     }
 
     return (
@@ -133,7 +143,8 @@ const Chatbot = () => {
                                 {messages.map((message, index) => (
                                     <MessageItem key={index} sender={message.sender}>
                                         <MessageContent sender={message.sender}>
-                                            <Typography variant="body1" sx={{ fontSize: '12px' }}>{message.text}</Typography>
+                                            {/* <Typography variant="body1" sx={{ fontSize: '12px' }}>{message.text}</Typography> */}
+                                            {message.text}
                                         </MessageContent>
                                     </MessageItem>
                                 ))}
