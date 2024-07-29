@@ -141,18 +141,18 @@ const Header = ({ isLoading, isAuthed }) => {
                                     variant="text"
                                     size="small"
                                     component="a"
-                                    href="/login"
+                                    href="/register"
                                 >
-                                    Login
+                                    Sign Up
                                 </Button>
                                 <Button
                                     color="secondary"
                                     variant="contained"
                                     size="small"
                                     component="a"
-                                    href="/register"
+                                    href="/login"
                                 >
-                                    Sign Up
+                                    Login
                                 </Button>
                                 </>
                             }
