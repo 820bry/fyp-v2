@@ -126,7 +126,7 @@ const FAQ = () => {
                         gutterBottom
                         sx={{ maxWidth: { sm: '100%', md: '70%' } }}
                     >
-                        Additional resources can be obtained <Link>here</Link>.
+                        Additional resources can be obtained <Link target="_blank" href="https://www.helpguide.org/find-help.htm">here</Link>.
                     </Typography>
                     </AccordionDetails>
                 </Accordion>

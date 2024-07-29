@@ -18,7 +18,6 @@ const Exercise = Loadable(lazy(() => import('../views/exercise')));
 
 // resources routing
 const Chatbot = Loadable(lazy(() => import('../views/chatbot')));
-const External = Loadable(lazy(() => import('../views/external')));
   
 // ==============================|| MAIN ROUTING ||============================== //
 
@@ -63,10 +62,6 @@ const MainRoutes = {
     {
       path: 'chat',
       element: <Chatbot />
-    },
-    {
-      path: 'external',
-      element: <External />
     }
   ]
 };

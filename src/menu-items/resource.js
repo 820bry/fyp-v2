@@ -20,7 +20,7 @@ const resource = {
             id: 'external',
             title: 'External Resources',
             type: 'item',
-            url: '/external',
+            url: 'https://www.helpguide.org/find-help.htm',
             icon: icons.IconExternalLink,
             breadcrumbs: false
         }
