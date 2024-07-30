@@ -21,6 +21,8 @@ const resource = {
             title: 'External Resources',
             type: 'item',
             url: 'https://www.helpguide.org/find-help.htm',
+            external: true,
+            target: true,
             icon: icons.IconExternalLink,
             breadcrumbs: false
         }
