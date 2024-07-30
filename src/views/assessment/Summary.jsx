@@ -12,10 +12,34 @@ import { PHQ9, GAD7, Combined } from './ResultText';
 
 const Summary = () => {
 
+    /*
+    Questions 1-9: Patient Health Questionnaires PHQ-9 (Depressive Diagnosis)
+    Questions 10-16: General Anxiety Disorder GAD-7 (Anxiety Diagnosis)
+
+    PHQ-9 total: 27
+    > 1-4: Minimal
+    > 5-9: Mild
+    > 10-14: Moderate
+    > 15-19: Moderately Severe
+    > 20-27: Severe
+
+    GAD-7 total: 21
+    > 0-4: Minimal
+    > 5-9: Mild
+    > 10-14: Moderate
+    > 15-21: Severe
+
+    total total: 48
+    (each score is stored in array index-1 because array starts at 0)
+    */
+
     const { state } = useLocation();
 
+    // the total score
     const total = state.scores.reduce((acc, curr) => acc + (curr !== null ? curr : 0), 0);
+    // the score for depression questions
     const phq9total = state.scores.slice(0, 9).reduce((acc, curr) => acc + curr, 0);
+    // the score for anxiety questions
     const gad7total = state.scores.slice(9, 16).reduce((acc, curr) => acc + curr, 0);
 
     const getDescription = (score, descriptions) => {

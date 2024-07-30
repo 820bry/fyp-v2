@@ -275,7 +275,7 @@ const Assessment = () => {
                     </RadioGroup>
                 </FormControl> 
             </SubCard>
-            <SubCard title="Feeling afraid, as if something awaful" sx={{my:2}}>
+            <SubCard title="Feeling afraid, as if something awful might happen" sx={{my:2}}>
                 <FormControl>
                     <RadioGroup name="16" id="16" onChange={(e, val) => handleRadioBtn(16, val)}>
                         <FormControlLabel value="0" control={<Radio />} label="Not at all" />
