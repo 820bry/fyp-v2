@@ -26,3 +26,4 @@ export const generateResponse = async (input) => {
 
     return response.text();
 }
+
